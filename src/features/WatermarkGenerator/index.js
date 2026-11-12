@@ -70,7 +70,7 @@ const GlobalStyles = () => (
     /* 自定義 Web Font: 丸子工坊 (繁體圓體) */
     @font-face {
       font-family: 'MarukoGothicCJKtc-Regular';
-      src: url('/fonts/MarukoGothicCJKtc-Regular.woff2') format('woff2');
+      src: url('${process.env.PUBLIC_URL}/fonts/MarukoGothicCJKtc-Regular.woff2') format('woff2');
       font-display: swap;
     }
 
