@@ -23,12 +23,28 @@ const useDownloadImage = () => {
 
         const { width, height } = customConfig;
 
+        // 若呼叫端提供了預建的字型 CSS（第一次匯出建好後快取），直接帶上，
+        // 套件會跳過掃描與重抓字型；建置失敗時退回預設行為（慢，但保證能匯出）
+        let fontOption = {};
+        if (options.fontCssText) {
+          try {
+            const cssText = await options.fontCssText;
+            if (cssText) fontOption = { font: { cssText } };
+          } catch (err) {
+            console.warn(
+              "Font cssText unavailable, falling back to default font embedding:",
+              err
+            );
+          }
+        }
+
         // modern-screenshot 的 API 很類似
         const dataUrl = await domToPng(ref.current, {
           scale: options.pixelRatio || 2, // 它是用 scale 參數
           width: width || ref.current.offsetWidth,
           height: height || ref.current.offsetHeight,
           quality: options.quality !== undefined ? options.quality : 1.0,
+          ...fontOption,
           // style 屬性它也支援
           style: {
             transform: "none",
