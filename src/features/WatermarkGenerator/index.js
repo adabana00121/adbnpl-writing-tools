@@ -32,7 +32,8 @@ import {
 } from "lucide-react";
 
 // --- NPM 套件引入 ---
-import { domToPng, createContext, destroyContext } from "modern-screenshot";
+import { domToPng } from "modern-screenshot";
+import { getFontCssText } from "../../utils/fontEmbedCSS";
 import mammoth from "mammoth";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
@@ -262,6 +263,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
       {
         pixelRatio: 2, quality: 0.95, // 優化：輕微降低品質換取更快速度
         backgroundColor: THEMES[theme].bg === "bg-white" ? "#ffffff" : null,
+        fontCssText: getFontCssText(fontFamily), // 預建字型 CSS（快取共用），失敗時 hook 會退回預設內嵌
         // modern-screenshot 通常不需要 skipFonts
       },
       {
@@ -280,19 +282,15 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
     }
     setIsZipping(true);
     let zip = new JSZip();
-    let context = null;
     try {
       const pageElements = exportContainerRef.current.children;
 
-      // 建立共用 context，讓字型只被 fetch + base64 編碼一次
+      // 字型 CSS 只建一次（內部快取），全部頁面共用；建置失敗時退回套件預設內嵌流程
+      let fontCssText = null;
       try {
-        context = await createContext(pageElements[0], {
-          scale: 2,
-          width: CONTAINER_WIDTH,
-          height: containerHeight,
-        });
+        fontCssText = await getFontCssText(fontFamily);
       } catch (e) {
-        console.warn('Context creation failed, falling back to per-page rendering', e);
+        console.warn('Font cssText unavailable, falling back to default font embedding:', e);
       }
 
       for (let i = 0; i < pageElements.length; i++) {
@@ -304,7 +302,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
           width: CONTAINER_WIDTH,
           height: containerHeight,
           style: { transform: "none", margin: 0 },
-          ...(context ? { context } : {}),
+          ...(fontCssText ? { font: { cssText: fontCssText } } : {}),
           features: {
             fixSvgXmlDecode: false,
           }
@@ -313,7 +311,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
         const base64Data = dataUrl.split(",")[1];
         zip.file(`${title}_p${i + 1}.png`, base64Data, { base64: true });
         
-        // 縮短等待時間，有 context 快取後記憶體壓力大幅降低
+        // 短暫等待，避免連續匯出時介面卡住
         await new Promise((resolve) => setTimeout(resolve, 50));
       }
 
@@ -326,10 +324,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
       console.error(err);
       alert("打包失敗，請重試");
     } finally {
-      // 清理 context 和大物件，避免記憶體洩漏
-      if (context) { try { destroyContext(context); } catch(e) {} }
       zip = null;
-      context = null;
       setIsZipping(false);
     }
   };
