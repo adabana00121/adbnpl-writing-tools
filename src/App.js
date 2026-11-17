@@ -47,6 +47,19 @@ const App = () => {
   // 狀態：檢查樣式是否已載入 (Tailwind)
   const [isStyleLoaded, setIsStyleLoaded] = useState(false);
 
+  // 折射偵測：只有 Chromium 能把 SVG url() 濾鏡用在 backdrop-filter 上。
+  // 偵測到才在 <html> 掛 .has-refraction，讓縮放膠囊改用折射濾鏡；
+  // Safari / Firefox 沒有這個 class，永遠走 blur 退路（Safari 會謊報
+  // @supports，所以不能用 CSS 偵測，只能用 JS 看 window.chrome）。
+  useEffect(() => {
+    const brands = navigator.userAgentData?.brands || [];
+    const isChromium =
+      !!window.chrome || brands.some((b) => b.brand === "Chromium");
+    if (isChromium) {
+      document.documentElement.classList.add("has-refraction");
+    }
+  }, []);
+
   // 初始化：動態載入 Tailwind CSS CDN (僅在無本地 Tailwind 環境時啟用)
   useEffect(() => {
     if (window.tailwind || document.querySelector("style[data-tailwindcss]")) {

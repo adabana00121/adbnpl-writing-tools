@@ -1,79 +1,102 @@
 /* ============================================================
-   Liquid Glass 介面材質系統（文手小工具）
+   Liquid Glass 介面材質系統（文手小工具）v2
    規則：玻璃只用在功能層（側欄、標題列、浮動控制、按鈕列），
    絕不用在內容層（預覽畫布與匯出原稿）。匯出節點內沒有任何
    .glass-* 元素，backdrop-filter 永遠不會滲進匯出的 PNG。
-   折射（SVG displacement）刻意不做：只有 Chromium 支援，
-   且手機 GPU 成本高；blur + 飽和 + 邊緣高光已是八成效果。
+   v2 重點：v1 被評「只是圓角跟漸層」——平坦紙色上 blur 幾乎
+   看不見，所以加強邊緣高光與光澤、浮動元件更透明，並給縮放
+   膠囊加上 SVG 折射（Chromium 才有，JS 偵測後才掛上，其他
+   瀏覽器退回 blur，絕不讓 url() 吃掉整個 backdrop 效果）。
    ============================================================ */
 
 :root {
   --paper: #f5f4ee;
   --ink: #0a0a0a;
-  --glass-tint: rgba(255, 253, 247, 0.62);
-  --glass-tint-strong: rgba(255, 253, 247, 0.8);
+  --glass-tint: rgba(255, 253, 247, 0.58);
+  --glass-tint-strong: rgba(255, 253, 247, 0.78);
   --glass-border: rgba(10, 10, 10, 0.08);
-  --glass-hairline: rgba(255, 255, 255, 0.65);
   --glass-shadow: 0 10px 32px rgba(10, 10, 10, 0.1);
-  --glass-shadow-sm: 0 4px 18px rgba(10, 10, 10, 0.12);
+  --glass-shadow-sm: 0 6px 22px rgba(10, 10, 10, 0.16);
+  /* 玻璃邊緣：頂部亮線 + 底部內陰影做出厚度 + 外圈亮環 */
+  --glass-rim: inset 0 1px 0 rgba(255, 255, 255, 0.85), inset 0 -1px 0 rgba(10, 10, 10, 0.06);
+  /* 斜向光澤：平坦背景上也要看得出是玻璃 */
+  --glass-sheen: linear-gradient(155deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 38%);
 }
 
-/* 環境背景：紙色基底 + 兩道極淡的暖色暈，給玻璃一點東西可折射。
+/* 環境背景：紙色基底 + 三道暖色暈，給玻璃一點東西可折射。
    只用 body 背景，不新增 DOM 層，避免影響版面與匯出。 */
 body {
   background-color: var(--paper);
   background-image:
-    radial-gradient(52rem 30rem at 8% -6%, rgba(199, 210, 254, 0.38), rgba(199, 210, 254, 0) 62%),
-    radial-gradient(46rem 28rem at 102% 12%, rgba(209, 250, 229, 0.34), rgba(209, 250, 229, 0) 60%),
-    radial-gradient(40rem 26rem at 55% 112%, rgba(254, 230, 199, 0.3), rgba(254, 230, 199, 0) 60%);
+    radial-gradient(52rem 30rem at 8% -6%, rgba(199, 210, 254, 0.46), rgba(199, 210, 254, 0) 62%),
+    radial-gradient(46rem 28rem at 102% 12%, rgba(209, 250, 229, 0.42), rgba(209, 250, 229, 0) 60%),
+    radial-gradient(40rem 26rem at 55% 112%, rgba(254, 230, 199, 0.38), rgba(254, 230, 199, 0) 60%);
   background-attachment: fixed;
 }
 
-/* ---------- 玻璃本體：有 backdrop-filter 的只此四種 ---------- */
+/* ---------- 玻璃本體：有 backdrop-filter 的只此五種 ---------- */
 
 /* 側邊欄 / 首頁卡片：主玻璃面板 */
 .glass-panel {
-  background: var(--glass-tint);
+  background-color: var(--glass-tint);
+  background-image: var(--glass-sheen);
   -webkit-backdrop-filter: blur(18px) saturate(1.5);
   backdrop-filter: blur(18px) saturate(1.5);
   border: 1px solid var(--glass-border);
-  box-shadow: inset 0 1px 0 var(--glass-hairline), var(--glass-shadow);
+  box-shadow: var(--glass-rim), var(--glass-shadow);
 }
 
 /* 工具標題列：深色玻璃，白字維持對比 */
 .glass-header {
-  background: rgba(67, 56, 202, 0.82);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  backdrop-filter: blur(14px) saturate(1.4);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  background-color: rgba(67, 56, 202, 0.68);
+  background-image: linear-gradient(155deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 45%);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  backdrop-filter: blur(16px) saturate(1.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(0, 0, 0, 0.12);
 }
 
-/* 底部下載列 / 分頁籤列：較不透明的玻璃，確保按鈕對比 */
+/* 底部下載列：較不透明的玻璃，確保按鈕對比 */
 .glass-bar {
-  background: var(--glass-tint-strong);
+  background-color: var(--glass-tint-strong);
+  background-image: var(--glass-sheen);
   -webkit-backdrop-filter: blur(14px) saturate(1.4);
   backdrop-filter: blur(14px) saturate(1.4);
   border-top: 1px solid var(--glass-border);
-  box-shadow: inset 0 1px 0 var(--glass-hairline);
+  box-shadow: var(--glass-rim);
 }
 
 /* 分頁籤列：與 glass-bar 同材質，改為底邊細線（位於側欄頂部） */
 .glass-tabstrip {
-  background: var(--glass-tint-strong);
+  background-color: var(--glass-tint-strong);
+  background-image: var(--glass-sheen);
   -webkit-backdrop-filter: blur(14px) saturate(1.4);
   backdrop-filter: blur(14px) saturate(1.4);
   border-bottom: 1px solid var(--glass-border);
-  box-shadow: inset 0 1px 0 var(--glass-hairline);
+  box-shadow: var(--glass-rim);
 }
 
-/* 浮在預覽上的縮放膠囊：效果最明顯的一塊，內容會從底下捲過 */
+/* 浮在預覽上的縮放膠囊：效果最明顯的一塊，內容會從底下捲過。
+   最透明 + 最強邊緣，Chromium 再加折射（見 .has-refraction）。 */
 .glass-pill {
-  background: rgba(255, 253, 247, 0.72);
-  -webkit-backdrop-filter: blur(14px) saturate(1.6);
-  backdrop-filter: blur(14px) saturate(1.6);
-  border: 1px solid rgba(255, 255, 255, 0.65);
+  background-color: rgba(255, 253, 247, 0.25);
+  background-image: linear-gradient(155deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 38%);
+  -webkit-backdrop-filter: blur(12px) saturate(1.8);
+  backdrop-filter: blur(12px) saturate(1.8);
+  border: 1px solid rgba(255, 255, 255, 0.7);
   border-radius: 9999px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), var(--glass-shadow-sm);
+  box-shadow:
+    var(--glass-rim),
+    0 0 0 1px rgba(10, 10, 10, 0.04),
+    var(--glass-shadow-sm);
+}
+
+/* 折射：只有 Chromium 能把 url() 濾鏡用在 backdrop-filter 上。
+   JS 偵測到 Chromium 才在 <html> 加 .has-refraction，其他瀏覽器
+   永遠看不到這條規則，blur 退路不受影響。濾鏡本體（#lg-refract）
+   由 PreviewCanvas 內的 <svg> 提供：blur + 位移 + 增飽和一次做完。 */
+.has-refraction .glass-pill {
+  -webkit-backdrop-filter: url(#lg-refract);
+  backdrop-filter: url(#lg-refract);
 }
 
 /* ---------- 玻璃上的元件：不疊 backdrop-filter ---------- */

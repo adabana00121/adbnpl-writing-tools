@@ -32,6 +32,39 @@ const PreviewCanvas = ({
       ref={containerRef}
       className="flex-1 preview-desk relative flex flex-col overflow-hidden h-full"
     >
+      {/* Liquid Glass 折射濾鏡定義（只供 Chromium 的 backdrop-filter: url() 使用；
+          寬高 0 但不用 display:none，否則濾鏡會失效。非 Chromium 瀏覽器忽略它。） */}
+      <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
+        <defs>
+          <filter
+            id="lg-refract"
+            x="-20%"
+            y="-20%"
+            width="140%"
+            height="140%"
+            colorInterpolationFilters="sRGB"
+          >
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.015"
+              numOctaves="2"
+              seed="7"
+              result="noise"
+            />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blurred" />
+            <feDisplacementMap
+              in="blurred"
+              in2="noise"
+              scale="28"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="displaced"
+            />
+            <feColorMatrix in="displaced" type="saturate" values="1.6" />
+          </filter>
+        </defs>
+      </svg>
+
       {/* --- 右上角縮放控制列（浮在預覽上的玻璃膠囊） --- */}
       <div className="glass-pill absolute top-4 right-4 z-50 flex gap-1 p-1 items-center">
         <button
