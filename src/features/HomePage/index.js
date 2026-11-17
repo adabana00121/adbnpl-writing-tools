@@ -6,6 +6,7 @@ import { Type, Receipt as ReceiptIcon, TreeDeciduous, ArrowUpRight } from "lucid
  * v3 大改造：拆掉實色綠 hero 與一體成型的大白卡，改成多片浮動玻璃
  * 面板，顏色只留在圖示上；開發中的需求表單／角色設定已移除。
  * v10：圖示改墨色中性 chip（自用不分品牌色），贊助鈕改為網站連結。
+ * v12：關於區改用網站關於頁自介原文；主色 emerald 全退役改墨色系。
  * @param {function} onSelectTool - 切換頁面的 callback
  * @param {string} globalAuthor - 全域筆名
  * @param {function} setGlobalAuthor - 設定全域筆名的方法
@@ -39,7 +40,7 @@ const HomePage = ({ onSelectTool, globalAuthor, setGlobalAuthor }) => {
             type="text"
             value={globalAuthor}
             onChange={(e) => setGlobalAuthor(e.target.value)}
-            className="glass-input w-full p-3 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all placeholder:text-gray-300"
+            className="glass-input w-full p-3 rounded-xl focus:ring-2 focus:ring-gray-400 outline-none transition-all placeholder:text-gray-300"
             placeholder="請在此輸入筆名..."
           />
         </section>
@@ -75,9 +76,13 @@ const HomePage = ({ onSelectTool, globalAuthor, setGlobalAuthor }) => {
         <section className="glass-panel rounded-3xl p-5">
           <h3 className="text-sm font-bold text-gray-800 mb-2">關於作者</h3>
           <p className="text-xs text-gray-500 leading-relaxed mb-4">
-            嗨！我是謊花，希望這個小工具可以幫助跟我一樣的迷你創作者。
+            Z世代佛系文手。台灣人。
             <br />
-            基礎架構由Gemini生成。目前使用Vercel免費方案，流量有限，請盡量不要濫用（✿◡‿◡）
+            <br />
+            需要在不愁吃穿無病無痛心靈健全的情況下才能寫文，然而不幸是個有慢性背痛的社畜（三節獎金拿五百塊的那種），總而言之寫文很慢。
+            <br />
+            <br />
+            有在接委託，原創努力中。
           </p>
 
           <div className="flex gap-3">

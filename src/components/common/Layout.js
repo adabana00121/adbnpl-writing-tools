@@ -8,7 +8,8 @@ import { ArrowLeft } from "lucide-react";
  * @param {string} title - 工具標題
  * @param {ReactNode} icon - 工具圖標 Component
  * @param {function} onBack - 返回首頁的函式
- * v10：圖示 chip 改墨色（自用工具不分品牌色），emerald 只留給狀態與動作。
+ * v10：圖示 chip 改墨色（自用工具不分品牌色）。v12：emerald 全退役，
+ * 狀態與動作改墨色系（她說 emerald 跟柔和背景不搭）。
  */
 const Layout = ({ sidebar, children, title, icon: Icon, onBack }) => {
   return (

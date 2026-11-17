@@ -342,7 +342,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
             <button
               onClick={() => setActiveTab("content")}
               className={`glass-btn flex-1 py-2.5 text-sm font-medium flex justify-center items-center gap-2 rounded-full ${activeTab === "content"
-                ? "text-emerald-700 bg-white/85 shadow"
+                ? "text-gray-900 bg-white/85 shadow"
                 : "text-gray-500 hover:bg-white/50"
                 }`}
             >
@@ -351,7 +351,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
             <button
               onClick={() => setActiveTab("style")}
               className={`glass-btn flex-1 py-2.5 text-sm font-medium flex justify-center items-center gap-2 rounded-full ${activeTab === "style"
-                ? "text-emerald-700 bg-white/85 shadow"
+                ? "text-gray-900 bg-white/85 shadow"
                 : "text-gray-500 hover:bg-white/50"
                 }`}
             >
@@ -360,7 +360,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
             <button
               onClick={() => setActiveTab("watermark")}
               className={`glass-btn flex-1 py-2.5 text-sm font-medium flex justify-center items-center gap-2 rounded-full ${activeTab === "watermark"
-                ? "text-emerald-700 bg-white/85 shadow"
+                ? "text-gray-900 bg-white/85 shadow"
                 : "text-gray-500 hover:bg-white/50"
                 }`}
             >
@@ -456,7 +456,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
               <button
                 onClick={onDownloadClick}
                 disabled={isGenerating}
-                className="glass-btn-solid flex-1 py-3 px-3 rounded-full flex items-center justify-center gap-2 font-bold text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50"
+                className="glass-btn-solid flex-1 py-3 px-3 rounded-full flex items-center justify-center gap-2 font-bold text-white bg-gray-900 hover:bg-black disabled:opacity-50"
               >
                 {isGenerating ? (
                   <Loader2 className="animate-spin" size={18} />
@@ -468,7 +468,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
               <button
                 onClick={handleDownloadAll}
                 disabled={isGenerating || isZipping}
-                className="glass-btn-solid flex-1 py-3 px-3 rounded-full flex items-center justify-center gap-2 font-bold text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50"
+                className="glass-btn-solid flex-1 py-3 px-3 rounded-full flex items-center justify-center gap-2 font-bold text-white bg-gray-900 hover:bg-black disabled:opacity-50"
               >
                 {isZipping ? (
                   <Loader2 className="animate-spin" size={18} />

@@ -148,7 +148,7 @@ const ReceiptGenerator = ({ globalAuthor, onBack }) => {
       sidebar={
         <>
           <div className="glass-tabstrip flex gap-1 p-2">
-            <div className="flex-1 py-2.5 text-sm font-medium flex justify-center items-center gap-2 text-emerald-700 bg-white/85 shadow rounded-full">
+            <div className="flex-1 py-2.5 text-sm font-medium flex justify-center items-center gap-2 text-gray-900 bg-white/85 shadow rounded-full">
               基本設定
             </div>
           </div>
@@ -180,7 +180,7 @@ const ReceiptGenerator = ({ globalAuthor, onBack }) => {
                       key={l}
                       onClick={() => setLang(l)}
                       className={`glass-btn flex-1 text-xs py-1.5 rounded-full ${lang === l
-                          ? "bg-white shadow text-emerald-600 font-bold"
+                          ? "bg-white shadow text-gray-900 font-bold"
                           : "text-gray-500 hover:bg-white/60"
                         }`}
                     >
@@ -231,7 +231,7 @@ const ReceiptGenerator = ({ globalAuthor, onBack }) => {
                 <h3 className="text-xs font-bold text-gray-400">消費項目</h3>
                 <button
                   onClick={addItem}
-                  className="text-xs bg-emerald-50 text-emerald-600 px-2 py-1 rounded hover:bg-emerald-100 flex items-center gap-1 font-bold"
+                  className="text-xs bg-gray-100 text-gray-900 px-2 py-1 rounded hover:bg-gray-200 flex items-center gap-1 font-bold"
                 >
                   <Plus size={12} /> {t.addItem}
                 </button>
@@ -291,7 +291,7 @@ const ReceiptGenerator = ({ globalAuthor, onBack }) => {
                 <span className="text-sm font-bold text-gray-500">
                   {t.total}
                 </span>
-                <span className="text-xl font-bold text-emerald-600">
+                <span className="text-xl font-bold text-gray-900">
                   ${totalPrice.toLocaleString()}
                 </span>
               </div>
@@ -310,7 +310,7 @@ const ReceiptGenerator = ({ globalAuthor, onBack }) => {
             <button
               onClick={onDownloadClick}
               disabled={isGenerating}
-              className="glass-btn-solid w-full py-3 px-4 rounded-full flex items-center justify-center gap-2 font-bold text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 transition-all active:scale-[0.98]"
+              className="glass-btn-solid w-full py-3 px-4 rounded-full flex items-center justify-center gap-2 font-bold text-white bg-gray-900 hover:bg-black disabled:opacity-50 transition-all active:scale-[0.98]"
             >
               {isGenerating ? (
                 <Loader2 className="animate-spin" size={20} />

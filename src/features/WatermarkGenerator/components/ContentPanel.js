@@ -46,7 +46,7 @@ const ContentPanel = ({
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="glass-input w-full p-2 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    className="glass-input w-full p-2 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-transparent"
                     placeholder="輸入文章標題"
                 />
             </div>
@@ -58,7 +58,7 @@ const ContentPanel = ({
                     type="text"
                     value={author}
                     onChange={(e) => setAuthor(e.target.value)}
-                    className="glass-input w-full p-2 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    className="glass-input w-full p-2 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-transparent"
                     placeholder="@yourname"
                 />
             </div>
@@ -70,7 +70,7 @@ const ContentPanel = ({
                     </label>
                     <button
                         onClick={() => setShowQrCode(!showQrCode)}
-                        className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${showQrCode ? "bg-emerald-600" : "bg-gray-300"
+                        className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${showQrCode ? "bg-gray-900" : "bg-gray-300"
                             }`}
                     >
                         <span
@@ -85,14 +85,14 @@ const ContentPanel = ({
                             type="text"
                             value={qrCodeContent}
                             onChange={(e) => setQrCodeContent(e.target.value)}
-                            className="glass-input w-full p-2 text-xs rounded-lg focus:ring-1 focus:ring-emerald-500"
+                            className="glass-input w-full p-2 text-xs rounded-lg focus:ring-1 focus:ring-gray-400"
                             placeholder="輸入網址"
                         />
                         <input
                             type="text"
                             value={qrCodeLabel}
                             onChange={(e) => setQrCodeLabel(e.target.value)}
-                            className="glass-input w-full p-2 text-xs rounded-lg focus:ring-1 focus:ring-emerald-500"
+                            className="glass-input w-full p-2 text-xs rounded-lg focus:ring-1 focus:ring-gray-400"
                             placeholder="輸入小字"
                         />
                     </div>
@@ -124,7 +124,7 @@ const ContentPanel = ({
                         <button
                             onClick={() => setAutoIndent(!autoIndent)}
                             className={`glass-btn p-1 rounded-full ${autoIndent
-                                ? "bg-emerald-100 text-emerald-600"
+                                ? "bg-gray-100 text-gray-900"
                                 : "hover:bg-white/70 text-gray-600"
                                 }`}
                             title="段落自動縮排 (1字元)"
@@ -158,13 +158,13 @@ const ContentPanel = ({
                     ref={textAreaRef}
                     value={text}
                     onChange={(e) => setText(e.target.value)}
-                    className="glass-input w-full h-48 p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 text-sm leading-relaxed whitespace-pre-wrap font-mono"
+                    className="glass-input w-full h-48 p-3 rounded-lg focus:ring-2 focus:ring-gray-400 text-sm leading-relaxed whitespace-pre-wrap font-mono"
                     placeholder="在此貼上你的小說內容..."
                 />
             </div>
 
             <div className="glass-well p-3 rounded-xl space-y-3">
-                <div className="flex items-center justify-between text-emerald-700 font-semibold text-sm">
+                <div className="flex items-center justify-between text-gray-900 font-semibold text-sm">
                     <div>分頁資訊</div>{" "}
                     {isCalculating && <span className="animate-pulse">運算中...</span>}
                 </div>
@@ -181,7 +181,7 @@ const ContentPanel = ({
                     </div>
                     <button
                         onClick={() => setKeepSentences(!keepSentences)}
-                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${keepSentences ? "bg-emerald-600" : "bg-gray-200"
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${keepSentences ? "bg-gray-900" : "bg-gray-200"
                             }`}
                     >
                         <span
