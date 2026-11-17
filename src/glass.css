@@ -28,13 +28,14 @@
 body {
   background-color: var(--paper);
   background-image:
-    radial-gradient(52rem 30rem at 8% -6%, rgba(199, 210, 254, 0.46), rgba(199, 210, 254, 0) 62%),
-    radial-gradient(46rem 28rem at 102% 12%, rgba(209, 250, 229, 0.42), rgba(209, 250, 229, 0) 60%),
-    radial-gradient(40rem 26rem at 55% 112%, rgba(254, 230, 199, 0.38), rgba(254, 230, 199, 0) 60%);
+    radial-gradient(52rem 30rem at 8% -6%, rgba(199, 210, 254, 0.55), rgba(199, 210, 254, 0) 62%),
+    radial-gradient(46rem 28rem at 102% 12%, rgba(209, 250, 229, 0.5), rgba(209, 250, 229, 0) 60%),
+    radial-gradient(40rem 26rem at 55% 112%, rgba(254, 230, 199, 0.45), rgba(254, 230, 199, 0) 60%),
+    radial-gradient(34rem 24rem at 88% 88%, rgba(254, 215, 226, 0.35), rgba(254, 215, 226, 0) 60%);
   background-attachment: fixed;
 }
 
-/* ---------- 玻璃本體：有 backdrop-filter 的只此五種 ---------- */
+/* ---------- 玻璃本體：有 backdrop-filter 的只此六種 ---------- */
 
 /* 側邊欄 / 首頁卡片：主玻璃面板 */
 .glass-panel {
@@ -46,13 +47,15 @@ body {
   box-shadow: var(--glass-rim), var(--glass-shadow);
 }
 
-/* 工具標題列：深色玻璃，白字維持對比 */
+/* 工具標題列：淺色玻璃 + 墨字，工具色只留在圖示小 chip 上。
+   v3 之前是深 indigo，被評「繽紛不透明」後改掉。 */
 .glass-header {
-  background-color: rgba(67, 56, 202, 0.68);
-  background-image: linear-gradient(155deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 45%);
-  -webkit-backdrop-filter: blur(16px) saturate(1.4);
-  backdrop-filter: blur(16px) saturate(1.4);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+  background-color: rgba(255, 253, 247, 0.6);
+  background-image: var(--glass-sheen);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  backdrop-filter: blur(16px) saturate(1.5);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: var(--glass-rim);
 }
 
 /* 底部下載列：較不透明的玻璃，確保按鈕對比 */
@@ -88,6 +91,16 @@ body {
     var(--glass-rim),
     0 0 0 1px rgba(10, 10, 10, 0.04),
     var(--glass-shadow-sm);
+}
+
+/* 贊助按鈕：玫瑰色玻璃，粉字維持對比 */
+.glass-rose {
+  background-color: rgba(255, 241, 242, 0.55);
+  background-image: var(--glass-sheen);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  backdrop-filter: blur(12px) saturate(1.5);
+  border: 1px solid rgba(251, 113, 133, 0.3);
+  box-shadow: var(--glass-rim), var(--glass-shadow-sm);
 }
 
 /* 折射：只有 Chromium 能把 url() 濾鏡用在 backdrop-filter 上。
@@ -146,13 +159,6 @@ body {
 /* 預覽區桌面：暖灰，襯紙色介面；匯出內容不受影響 */
 .preview-desk {
   background: #e8e6e0;
-}
-
-/* 首頁標頭：保持實色綠，只加玻璃光澤（不疊 backdrop-filter） */
-.glass-hero {
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.35),
-    inset 0 -18px 32px rgba(0, 0, 0, 0.08);
 }
 
 @media (prefers-reduced-motion: reduce) {

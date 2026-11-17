@@ -7,9 +7,15 @@ import { ArrowLeft } from "lucide-react";
  * @param {ReactNode} children - 右側主要內容 (預覽區)
  * @param {string} title - 工具標題
  * @param {ReactNode} icon - 工具圖標 Component
+ * @param {string} accent - 工具代表色 (indigo / emerald)，只用在圖示 chip 上
  * @param {function} onBack - 返回首頁的函式
  */
-const Layout = ({ sidebar, children, title, icon: Icon, onBack }) => {
+const ACCENT_CHIP = {
+  indigo: "bg-indigo-600",
+  emerald: "bg-emerald-600",
+};
+
+const Layout = ({ sidebar, children, title, icon: Icon, accent = "indigo", onBack }) => {
   return (
     // Root: 手機版 min-h-screen (可捲動), 電腦版 h-screen (固定視窗)
     // 背景透明，讓 body 的紙色環境暈透出來給玻璃折射
@@ -17,17 +23,25 @@ const Layout = ({ sidebar, children, title, icon: Icon, onBack }) => {
       {/* 側邊欄容器 */}
       {/* 手機版 h-auto (自然撐開), 電腦版 h-full (填滿) */}
       <div className="glass-panel w-full md:w-96 flex flex-col h-auto md:h-full z-30 shrink-0">
-        {/* 側邊欄標題列 */}
-        <div className="glass-header p-4 text-white flex items-center shrink-0">
+        {/* 側邊欄標題列：淺色玻璃 + 墨字 */}
+        <div className="glass-header p-4 flex items-center shrink-0">
           <button
             onClick={onBack}
-            className="mr-3 hover:bg-white/20 p-1 rounded transition-colors"
+            className="mr-3 hover:bg-black/5 text-gray-500 p-1 rounded transition-colors"
             title="返回首頁"
           >
             <ArrowLeft size={20} />
           </button>
-          <h1 className="text-xl font-bold flex items-center gap-2">
-            {Icon && <Icon size={20} />}
+          <h1 className="text-xl font-bold flex items-center gap-2 text-gray-900">
+            {Icon && (
+              <span
+                className={`w-8 h-8 rounded-full ${
+                  ACCENT_CHIP[accent] || ACCENT_CHIP.indigo
+                } text-white flex items-center justify-center shrink-0`}
+              >
+                <Icon size={16} />
+              </span>
+            )}
             {title}
           </h1>
         </div>

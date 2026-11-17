@@ -333,6 +333,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
     <Layout
       title="文手排版助手"
       icon={Type}
+      accent="indigo"
       onBack={onBack}
       sidebar={
         <>

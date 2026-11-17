@@ -5,40 +5,8 @@ import HomePage from "./features/HomePage";
 import ReceiptGenerator from "./features/ReceiptGenerator";
 import WatermarkGenerator from "./features/WatermarkGenerator";
 
-// 尚未實作的功能先用簡單的 Placeholder 代替
-// (等到之後開發 CommissionForm 時再替換掉)
-const CommissionForm = ({ onBack }) => (
-  <div className="min-h-screen flex items-center justify-center text-gray-500">
-    <div className="glass-panel text-center rounded-3xl px-10 py-8">
-      <h2 className="text-2xl font-bold mb-2">需求表單</h2>
-      <p className="mb-4">功能開發中...</p>
-      <button
-        onClick={onBack}
-        className="glass-btn-solid px-4 py-2 bg-indigo-600 text-white rounded-full"
-      >
-        返回
-      </button>
-    </div>
-  </div>
-);
-
-const CharacterCard = ({ onBack }) => (
-  <div className="min-h-screen flex items-center justify-center text-gray-500">
-    <div className="glass-panel text-center rounded-3xl px-10 py-8">
-      <h2 className="text-2xl font-bold mb-2">角色設定卡</h2>
-      <p className="mb-4">功能開發中...</p>
-      <button
-        onClick={onBack}
-        className="glass-btn-solid px-4 py-2 bg-indigo-600 text-white rounded-full"
-      >
-        返回
-      </button>
-    </div>
-  </div>
-);
-
 const App = () => {
-  // 頁面狀態: 'home', 'receipt', 'watermark', 'commission-form', 'character-card'
+  // 頁面狀態: 'home', 'receipt', 'watermark'
   const [currentPage, setCurrentPage] = useState("home");
 
   // 全域筆名狀態
@@ -103,24 +71,6 @@ const App = () => {
   if (currentPage === "watermark") {
     return (
       <WatermarkGenerator
-        globalAuthor={globalAuthor}
-        onBack={() => setCurrentPage("home")}
-      />
-    );
-  }
-
-  if (currentPage === "commission-form") {
-    return (
-      <CommissionForm
-        globalAuthor={globalAuthor}
-        onBack={() => setCurrentPage("home")}
-      />
-    );
-  }
-
-  if (currentPage === "character-card") {
-    return (
-      <CharacterCard
         globalAuthor={globalAuthor}
         onBack={() => setCurrentPage("home")}
       />

@@ -144,6 +144,7 @@ const ReceiptGenerator = ({ globalAuthor, onBack }) => {
     <Layout
       title="收據產生器"
       icon={ReceiptIcon}
+      accent="emerald"
       onBack={onBack}
       sidebar={
         <>

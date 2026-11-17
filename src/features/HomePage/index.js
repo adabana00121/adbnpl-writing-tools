@@ -1,162 +1,115 @@
 import React from "react";
-import {
-  Type,
-  Receipt as ReceiptIcon,
-  FileText,
-  User,
-  TreeDeciduous,
-} from "lucide-react";
+import { Type, Receipt as ReceiptIcon, TreeDeciduous } from "lucide-react";
 
 /**
  * 首頁元件
+ * v3 大改造：拆掉實色綠 hero 與一體成型的大白卡，改成多片浮動玻璃
+ * 面板，顏色只留在圖示上；開發中的需求表單／角色設定已移除。
  * @param {function} onSelectTool - 切換頁面的 callback
  * @param {string} globalAuthor - 全域筆名
  * @param {function} setGlobalAuthor - 設定全域筆名的方法
  */
 const HomePage = ({ onSelectTool, globalAuthor, setGlobalAuthor }) => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 font-sans text-gray-800">
-      <div className="glass-panel max-w-md w-full rounded-3xl overflow-hidden">
-        {/* 1. 頂部標題區 */}
-        <div className="glass-hero bg-green-500 p-8 text-center relative overflow-hidden">
-          {/* 背景裝飾 */}
-          <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-            <div className="absolute top-[-20%] left-[-20%] w-40 h-40 bg-white rounded-full mix-blend-overlay blur-xl"></div>
-            <div className="absolute bottom-[-20%] right-[-20%] w-40 h-40 bg-white rounded-full mix-blend-overlay blur-xl"></div>
+    <div className="min-h-screen flex flex-col items-center p-4 pt-8 pb-10 font-sans text-gray-800">
+      <div className="max-w-md w-full space-y-4">
+        {/* 1. 標題：浮動玻璃面板 */}
+        <header className="glass-panel rounded-[28px] px-6 py-8 text-center">
+          <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-300/50 flex items-center justify-center mx-auto mb-4">
+            <TreeDeciduous className="text-emerald-600" size={32} />
           </div>
-
-          <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-3xl shadow-md relative z-10">
-            <TreeDeciduous className="text-green-600" size={32} />
-          </div>
-          <h1 className="text-2xl font-bold text-white mb-1 relative z-10">
+          <h1 className="text-[28px] leading-tight font-bold text-gray-900 mb-1">
             文手工具箱
           </h1>
-          <p className="text-green-200 text-sm relative z-10">
+          <p className="text-sm text-gray-500">
             專為文手打造的生產力工具
           </p>
+        </header>
+
+        {/* 2. 全域設定區 */}
+        <section className="glass-panel rounded-3xl p-5">
+          <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
+            您的筆名{" "}
+            <span className="font-normal text-gray-400 normal-case">
+              (全站共用)
+            </span>
+          </label>
+          <input
+            type="text"
+            value={globalAuthor}
+            onChange={(e) => setGlobalAuthor(e.target.value)}
+            className="glass-input w-full p-3 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all placeholder:text-gray-300"
+            placeholder="請在此輸入筆名..."
+          />
+        </section>
+
+        {/* 3. 工具選單：兩張直接浮在背景上的玻璃卡 */}
+        <div className="grid grid-cols-2 gap-3">
+          {/* 工具 A: 排版助手 */}
+          <button
+            onClick={() => onSelectTool("watermark")}
+            className="glass-panel glass-btn flex flex-col items-center justify-center p-5 rounded-3xl group"
+          >
+            <div className="w-11 h-11 bg-indigo-500/10 border border-indigo-300/50 text-indigo-600 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+              <Type size={20} />
+            </div>
+            <span className="text-sm font-bold text-gray-800">排版助手</span>
+          </button>
+
+          {/* 工具 B: 收據產生器 */}
+          <button
+            onClick={() => onSelectTool("receipt")}
+            className="glass-panel glass-btn flex flex-col items-center justify-center p-5 rounded-3xl group"
+          >
+            <div className="w-11 h-11 bg-emerald-500/10 border border-emerald-300/50 text-emerald-600 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+              <ReceiptIcon size={20} />
+            </div>
+            <span className="text-sm font-bold text-gray-800">
+              收據產生器
+            </span>
+          </button>
         </div>
 
-        <div className="p-6 space-y-8">
-          {/* 2. 全域設定區 */}
-          <div>
-            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
-              您的筆名{" "}
-              <span className="font-normal text-gray-400 normal-case">
-                (全站共用)
-              </span>
-            </label>
-            <input
-              type="text"
-              value={globalAuthor}
-              onChange={(e) => setGlobalAuthor(e.target.value)}
-              className="glass-input w-full p-3 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all placeholder:text-gray-300"
-              placeholder="請在此輸入筆名..."
-            />
-          </div>
+        {/* 4. 關於與贊助區 */}
+        <section className="glass-panel rounded-3xl p-5">
+          <h3 className="text-sm font-bold text-gray-800 mb-2">關於作者</h3>
+          <p className="text-xs text-gray-500 leading-relaxed mb-4">
+            嗨！我是謊花，希望這個小工具可以幫助跟我一樣的迷你創作者。
+            <br />
+            基礎架構由Gemini生成。目前使用Vercel免費方案，流量有限，請盡量不要濫用（✿◡‿◡）
+          </p>
 
-          {/* 3. 工具選單區 (4格) */}
-          <div>
-            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">
-              工具列表
-            </label>
-            <div className="grid grid-cols-2 gap-3">
-              {/* 工具 A: 排版助手 */}
-              <button
-                onClick={() => onSelectTool("watermark")}
-                className="glass-well glass-btn flex flex-col items-center justify-center p-4 rounded-2xl hover:shadow-md group"
-              >
-                <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-                  <Type size={20} />
-                </div>
-                <span className="text-sm font-bold text-gray-700">
-                  排版助手
-                </span>
-              </button>
-
-              {/* 工具 B: 收據產生器 */}
-              <button
-                onClick={() => onSelectTool("receipt")}
-                className="glass-well glass-btn flex flex-col items-center justify-center p-4 rounded-2xl hover:shadow-md group"
-              >
-                <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-                  <ReceiptIcon size={20} />
-                </div>
-                <span className="text-sm font-bold text-gray-700">
-                  收據產生器
-                </span>
-              </button>
-
-              {/* 工具 C: 需求表單 (開發中) */}
-              <button
-                onClick={() => onSelectTool("commission-form")}
-                className="glass-well flex flex-col items-center justify-center p-4 rounded-2xl group opacity-60 cursor-not-allowed"
-                disabled
-              >
-                <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-2">
-                  <FileText size={20} />
-                </div>
-                <span className="text-sm font-bold text-gray-700">
-                  需求表單(開發中)
-                </span>
-              </button>
-
-              {/* 工具 D: 角色設定 (開發中) */}
-              <button
-                onClick={() => onSelectTool("character-card")}
-                className="glass-well flex flex-col items-center justify-center p-4 rounded-2xl group opacity-60 cursor-not-allowed"
-                disabled
-              >
-                <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-2">
-                  <User size={20} />
-                </div>
-                <span className="text-sm font-bold text-gray-700">
-                  角色設定(開發中)
-                </span>
-              </button>
-            </div>
-          </div>
-
-          {/* 4. 關於與贊助區 */}
-          <div className="pt-6 border-t border-gray-100">
-            <h3 className="text-sm font-bold text-gray-800 mb-2">關於作者</h3>
-            <p className="text-xs text-gray-500 leading-relaxed mb-4">
-              嗨！我是謊花，希望這個小工具可以幫助跟我一樣的迷你創作者。
-              <br />
-              基礎架構由Gemini生成。目前使用Vercel免費方案，流量有限，請盡量不要濫用（✿◡‿◡）
-            </p>
-
-            <div className="flex gap-3">
-              <a
-                href="#"
-                className="glass-btn flex-1 py-2 px-3 bg-white/60 hover:bg-white/80 text-gray-700 rounded-full text-xs font-bold text-center transition-colors flex items-center justify-center gap-2"
-              >
-                <span>我的噗浪</span>
-              </a>
-
-              <a
-                href="#"
-                className="glass-btn flex-1 py-2 px-3 bg-white/60 hover:bg-white/80 text-gray-700 rounded-full text-xs font-bold text-center transition-colors flex items-center justify-center gap-2"
-              >
-                <span>我的Threads</span>
-              </a>
-            </div>
+          <div className="flex gap-3">
+            <a
+              href="#"
+              className="glass-well glass-btn flex-1 py-2 px-3 hover:bg-white/80 text-gray-700 rounded-full text-xs font-bold text-center transition-colors flex items-center justify-center gap-2"
+            >
+              <span>我的噗浪</span>
+            </a>
 
             <a
               href="#"
-              className="glass-btn mt-3 w-full py-3 px-4 bg-pink-50/80 text-pink-600 hover:bg-pink-100 hover:text-pink-700 border border-pink-200/70 rounded-full text-sm font-bold text-center transition-all flex items-center justify-center gap-2 group"
+              className="glass-well glass-btn flex-1 py-2 px-3 hover:bg-white/80 text-gray-700 rounded-full text-xs font-bold text-center transition-colors flex items-center justify-center gap-2"
             >
-              <span className="group-hover:scale-110 transition-transform">
-                🥤
-              </span>
-              請作者喝杯手搖 (贊助)
+              <span>我的Threads</span>
             </a>
           </div>
-        </div>
 
-        {/* 5. 頁尾版權宣告 */}
-        <div className="bg-white/40 p-4 text-center text-[10px] text-gray-400 border-t border-gray-100/60">
+          <a
+            href="#"
+            className="glass-rose glass-btn mt-3 w-full py-3 px-4 text-rose-600 hover:text-rose-700 rounded-full text-sm font-bold text-center transition-all flex items-center justify-center gap-2 group"
+          >
+            <span className="group-hover:scale-110 transition-transform">
+              🥤
+            </span>
+            請作者喝杯手搖 (贊助)
+          </a>
+        </section>
+
+        {/* 5. 頁尾：素字，不再是白條 */}
+        <p className="text-center text-[10px] text-gray-400 pt-1">
           © 2025 Adabanipal Library • Free & Open Source
-        </div>
+        </p>
       </div>
     </div>
   );
