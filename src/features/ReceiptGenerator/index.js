@@ -310,7 +310,7 @@ const ReceiptGenerator = ({ globalAuthor, onBack }) => {
             <button
               onClick={onDownloadClick}
               disabled={isGenerating}
-              className="glass-btn-solid w-full py-3 px-4 rounded-full flex items-center justify-center gap-2 font-bold text-white bg-gray-900 hover:bg-black disabled:opacity-50 transition-all active:scale-[0.98]"
+              className="glass-btn-solid w-full py-3 px-4 rounded-full flex items-center justify-center gap-2 font-bold text-white bg-black/70 hover:bg-black/80 disabled:opacity-50 transition-all active:scale-[0.98]"
             >
               {isGenerating ? (
                 <Loader2 className="animate-spin" size={20} />
