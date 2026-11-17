@@ -5,6 +5,45 @@ import HomePage from "./features/HomePage";
 import ReceiptGenerator from "./features/ReceiptGenerator";
 import WatermarkGenerator from "./features/WatermarkGenerator";
 
+// Liquid Glass 面板折射濾鏡定義（#lg-thick）。只供 Chromium 的
+// backdrop-filter: url() 使用；寬高 0 但不用 display:none，否則
+// 濾鏡會失效。掛在 App 層、三頁都渲染，確保濾鏡本體永遠在 DOM
+// 裡——面板的折射規則（.has-refraction .glass-panel）指著它，
+// 濾鏡缺席時整條 backdrop-filter 會失效，面板就幾乎全透了。
+// 膠囊的 #lg-refract 仍由 PreviewCanvas 提供，兩者不重複。
+const GlassFilters = () => (
+  <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
+    <defs>
+      <filter
+        id="lg-thick"
+        x="-20%"
+        y="-20%"
+        width="140%"
+        height="140%"
+        colorInterpolationFilters="sRGB"
+      >
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.015"
+          numOctaves="2"
+          seed="7"
+          result="noise"
+        />
+        <feGaussianBlur in="noise" stdDeviation="2" result="smoothed" />
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="smoothed"
+          scale="56"
+          xChannelSelector="R"
+          yChannelSelector="G"
+          result="displaced"
+        />
+        <feColorMatrix in="displaced" type="saturate" values="1.3" />
+      </filter>
+    </defs>
+  </svg>
+);
+
 const App = () => {
   // 頁面狀態: 'home', 'receipt', 'watermark'
   const [currentPage, setCurrentPage] = useState("home");
@@ -61,29 +100,38 @@ const App = () => {
 
   if (currentPage === "receipt") {
     return (
-      <ReceiptGenerator
-        globalAuthor={globalAuthor}
-        onBack={() => setCurrentPage("home")}
-      />
+      <>
+        <GlassFilters />
+        <ReceiptGenerator
+          globalAuthor={globalAuthor}
+          onBack={() => setCurrentPage("home")}
+        />
+      </>
     );
   }
 
   if (currentPage === "watermark") {
     return (
-      <WatermarkGenerator
-        globalAuthor={globalAuthor}
-        onBack={() => setCurrentPage("home")}
-      />
+      <>
+        <GlassFilters />
+        <WatermarkGenerator
+          globalAuthor={globalAuthor}
+          onBack={() => setCurrentPage("home")}
+        />
+      </>
     );
   }
 
   // 預設顯示首頁
   return (
-    <HomePage
-      onSelectTool={setCurrentPage}
-      globalAuthor={globalAuthor}
-      setGlobalAuthor={setGlobalAuthor}
-    />
+    <>
+      <GlassFilters />
+      <HomePage
+        onSelectTool={setCurrentPage}
+        globalAuthor={globalAuthor}
+        setGlobalAuthor={setGlobalAuthor}
+      />
+    </>
   );
 };
 
