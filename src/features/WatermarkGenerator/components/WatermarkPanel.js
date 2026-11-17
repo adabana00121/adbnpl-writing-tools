@@ -24,11 +24,11 @@ const WatermarkPanel = ({
                         type="text"
                         value={watermarkText}
                         onChange={(e) => setWatermarkText(e.target.value)}
-                        className="flex-1 p-2 border rounded"
+                        className="glass-input flex-1 p-2 rounded-lg"
                     />
                     <button
                         onClick={() => setWatermarkText(author)}
-                        className="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-xs rounded"
+                        className="glass-btn px-3 py-2 bg-white/60 hover:bg-white/80 text-xs rounded-full"
                     >
                         筆名
                     </button>
@@ -50,9 +50,9 @@ const WatermarkPanel = ({
                 <div className="grid grid-cols-3 gap-2">
                     <button
                         onClick={() => setWatermarkType("grid")}
-                        className={`flex flex-col items-center justify-center p-3 border rounded-lg ${watermarkType === "grid"
+                        className={`glass-btn flex flex-col items-center justify-center p-3 border rounded-xl ${watermarkType === "grid"
                                 ? "border-indigo-500 bg-indigo-50"
-                                : "bg-white"
+                                : "bg-white/60 border-gray-200/60 hover:bg-white/80"
                             }`}
                     >
                         <Grid3X3 size={20} />
@@ -60,9 +60,9 @@ const WatermarkPanel = ({
                     </button>
                     <button
                         onClick={() => setWatermarkType("center")}
-                        className={`flex flex-col items-center justify-center p-3 border rounded-lg ${watermarkType === "center"
+                        className={`glass-btn flex flex-col items-center justify-center p-3 border rounded-xl ${watermarkType === "center"
                                 ? "border-indigo-500 bg-indigo-50"
-                                : "bg-white"
+                                : "bg-white/60 border-gray-200/60 hover:bg-white/80"
                             }`}
                     >
                         <Stamp size={20} />
@@ -70,9 +70,9 @@ const WatermarkPanel = ({
                     </button>
                     <button
                         onClick={() => setWatermarkType("corner")}
-                        className={`flex flex-col items-center justify-center p-3 border rounded-lg ${watermarkType === "corner"
+                        className={`glass-btn flex flex-col items-center justify-center p-3 border rounded-xl ${watermarkType === "corner"
                                 ? "border-indigo-500 bg-indigo-50"
-                                : "bg-white"
+                                : "bg-white/60 border-gray-200/60 hover:bg-white/80"
                             }`}
                     >
                         <ImageIcon size={20} />

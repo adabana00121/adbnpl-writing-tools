@@ -12,12 +12,13 @@ import { ArrowLeft } from "lucide-react";
 const Layout = ({ sidebar, children, title, icon: Icon, onBack }) => {
   return (
     // Root: 手機版 min-h-screen (可捲動), 電腦版 h-screen (固定視窗)
-    <div className="min-h-screen md:h-screen md:overflow-hidden bg-gray-50 flex flex-col md:flex-row font-sans text-gray-800">
+    // 背景透明，讓 body 的紙色環境暈透出來給玻璃折射
+    <div className="min-h-screen md:h-screen md:overflow-hidden flex flex-col md:flex-row font-sans text-gray-800">
       {/* 側邊欄容器 */}
       {/* 手機版 h-auto (自然撐開), 電腦版 h-full (填滿) */}
-      <div className="w-full md:w-96 bg-white border-b md:border-b-0 md:border-r border-gray-200 flex flex-col h-auto md:h-full shadow-lg z-30 shrink-0">
+      <div className="glass-panel w-full md:w-96 flex flex-col h-auto md:h-full z-30 shrink-0">
         {/* 側邊欄標題列 */}
-        <div className="p-4 border-b border-gray-200 bg-indigo-600 text-white flex items-center shrink-0">
+        <div className="glass-header p-4 text-white flex items-center shrink-0">
           <button
             onClick={onBack}
             className="mr-3 hover:bg-white/20 p-1 rounded transition-colors"
@@ -41,7 +42,7 @@ const Layout = ({ sidebar, children, title, icon: Icon, onBack }) => {
       {/* 右側主要內容區 (預覽區) */}
       {/* 手機版 h-[80vh] (給予足夠的預覽空間), 電腦版 flex-1 (填滿剩餘寬度) */}
       {/* 加上 relative 確保內部 absolute 定位正常 */}
-      <div className="relative w-full h-[80vh] md:h-full md:flex-1 bg-gray-200">
+      <div className="preview-desk relative w-full h-[80vh] md:h-full md:flex-1">
         {children}
       </div>
     </div>

@@ -1,0 +1,140 @@
+/* ============================================================
+   Liquid Glass 介面材質系統（文手小工具）
+   規則：玻璃只用在功能層（側欄、標題列、浮動控制、按鈕列），
+   絕不用在內容層（預覽畫布與匯出原稿）。匯出節點內沒有任何
+   .glass-* 元素，backdrop-filter 永遠不會滲進匯出的 PNG。
+   折射（SVG displacement）刻意不做：只有 Chromium 支援，
+   且手機 GPU 成本高；blur + 飽和 + 邊緣高光已是八成效果。
+   ============================================================ */
+
+:root {
+  --paper: #f5f4ee;
+  --ink: #0a0a0a;
+  --glass-tint: rgba(255, 253, 247, 0.62);
+  --glass-tint-strong: rgba(255, 253, 247, 0.8);
+  --glass-border: rgba(10, 10, 10, 0.08);
+  --glass-hairline: rgba(255, 255, 255, 0.65);
+  --glass-shadow: 0 10px 32px rgba(10, 10, 10, 0.1);
+  --glass-shadow-sm: 0 4px 18px rgba(10, 10, 10, 0.12);
+}
+
+/* 環境背景：紙色基底 + 兩道極淡的暖色暈，給玻璃一點東西可折射。
+   只用 body 背景，不新增 DOM 層，避免影響版面與匯出。 */
+body {
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(52rem 30rem at 8% -6%, rgba(199, 210, 254, 0.38), rgba(199, 210, 254, 0) 62%),
+    radial-gradient(46rem 28rem at 102% 12%, rgba(209, 250, 229, 0.34), rgba(209, 250, 229, 0) 60%),
+    radial-gradient(40rem 26rem at 55% 112%, rgba(254, 230, 199, 0.3), rgba(254, 230, 199, 0) 60%);
+  background-attachment: fixed;
+}
+
+/* ---------- 玻璃本體：有 backdrop-filter 的只此四種 ---------- */
+
+/* 側邊欄 / 首頁卡片：主玻璃面板 */
+.glass-panel {
+  background: var(--glass-tint);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  backdrop-filter: blur(18px) saturate(1.5);
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 var(--glass-hairline), var(--glass-shadow);
+}
+
+/* 工具標題列：深色玻璃，白字維持對比 */
+.glass-header {
+  background: rgba(67, 56, 202, 0.82);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* 底部下載列 / 分頁籤列：較不透明的玻璃，確保按鈕對比 */
+.glass-bar {
+  background: var(--glass-tint-strong);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  border-top: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 var(--glass-hairline);
+}
+
+/* 分頁籤列：與 glass-bar 同材質，改為底邊細線（位於側欄頂部） */
+.glass-tabstrip {
+  background: var(--glass-tint-strong);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 var(--glass-hairline);
+}
+
+/* 浮在預覽上的縮放膠囊：效果最明顯的一塊，內容會從底下捲過 */
+.glass-pill {
+  background: rgba(255, 253, 247, 0.72);
+  -webkit-backdrop-filter: blur(14px) saturate(1.6);
+  backdrop-filter: blur(14px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 9999px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), var(--glass-shadow-sm);
+}
+
+/* ---------- 玻璃上的元件：不疊 backdrop-filter ---------- */
+
+/* 面板內的淺盒（QR 設定、分頁資訊、收據項目）：半透明 + 細邊，不再加 blur */
+.glass-well {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(10, 10, 10, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* 分段控制器容器（比例、字體、對齊、語言切換） */
+.glass-segment {
+  background: rgba(10, 10, 10, 0.05);
+  box-shadow: inset 0 1px 3px rgba(10, 10, 10, 0.08);
+}
+
+/* 輸入框：半透明白底，focus 樣式沿用各元件原有的 Tailwind ring */
+.glass-input {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(10, 10, 10, 0.12);
+}
+
+/* 實色主按鈕蓋在玻璃上：加頂部高光，看起來是被光照著的實體 */
+.glass-btn-solid {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+    0 6px 16px rgba(10, 10, 10, 0.18);
+  transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
+}
+
+.glass-btn-solid:active {
+  transform: scale(0.98);
+  filter: brightness(1.06);
+}
+
+/* 玻璃上的次要按鈕（首頁工具卡、頁籤）：按壓有液態回饋 */
+.glass-btn {
+  transition: transform 0.12s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.glass-btn:active {
+  transform: scale(0.97);
+}
+
+/* 預覽區桌面：暖灰，襯紙色介面；匯出內容不受影響 */
+.preview-desk {
+  background: #e8e6e0;
+}
+
+/* 首頁標頭：保持實色綠，只加玻璃光澤（不疊 backdrop-filter） */
+.glass-hero {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -18px 32px rgba(0, 0, 0, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-btn-solid,
+  .glass-btn {
+    transition: none;
+  }
+}

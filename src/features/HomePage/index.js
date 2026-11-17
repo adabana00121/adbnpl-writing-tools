@@ -15,10 +15,10 @@ import {
  */
 const HomePage = ({ onSelectTool, globalAuthor, setGlobalAuthor }) => {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4 font-sans text-gray-800">
-      <div className="max-w-md w-full bg-white rounded-xl shadow-lg overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 font-sans text-gray-800">
+      <div className="glass-panel max-w-md w-full rounded-3xl overflow-hidden">
         {/* 1. 頂部標題區 */}
-        <div className="bg-green-500 p-8 text-center relative overflow-hidden">
+        <div className="glass-hero bg-green-500 p-8 text-center relative overflow-hidden">
           {/* 背景裝飾 */}
           <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
             <div className="absolute top-[-20%] left-[-20%] w-40 h-40 bg-white rounded-full mix-blend-overlay blur-xl"></div>
@@ -49,7 +49,7 @@ const HomePage = ({ onSelectTool, globalAuthor, setGlobalAuthor }) => {
               type="text"
               value={globalAuthor}
               onChange={(e) => setGlobalAuthor(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition-all placeholder:text-gray-300"
+              className="glass-input w-full p-3 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all placeholder:text-gray-300"
               placeholder="請在此輸入筆名..."
             />
           </div>
@@ -63,7 +63,7 @@ const HomePage = ({ onSelectTool, globalAuthor, setGlobalAuthor }) => {
               {/* 工具 A: 排版助手 */}
               <button
                 onClick={() => onSelectTool("watermark")}
-                className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 hover:shadow-md transition-all group bg-white"
+                className="glass-well glass-btn flex flex-col items-center justify-center p-4 rounded-2xl hover:shadow-md group"
               >
                 <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
                   <Type size={20} />
@@ -76,7 +76,7 @@ const HomePage = ({ onSelectTool, globalAuthor, setGlobalAuthor }) => {
               {/* 工具 B: 收據產生器 */}
               <button
                 onClick={() => onSelectTool("receipt")}
-                className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-xl hover:border-emerald-500 hover:bg-emerald-50 hover:shadow-md transition-all group bg-white"
+                className="glass-well glass-btn flex flex-col items-center justify-center p-4 rounded-2xl hover:shadow-md group"
               >
                 <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
                   <ReceiptIcon size={20} />
@@ -89,7 +89,7 @@ const HomePage = ({ onSelectTool, globalAuthor, setGlobalAuthor }) => {
               {/* 工具 C: 需求表單 (開發中) */}
               <button
                 onClick={() => onSelectTool("commission-form")}
-                className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 hover:shadow-md transition-all group bg-white opacity-60 cursor-not-allowed"
+                className="glass-well flex flex-col items-center justify-center p-4 rounded-2xl group opacity-60 cursor-not-allowed"
                 disabled
               >
                 <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-2">
@@ -103,7 +103,7 @@ const HomePage = ({ onSelectTool, globalAuthor, setGlobalAuthor }) => {
               {/* 工具 D: 角色設定 (開發中) */}
               <button
                 onClick={() => onSelectTool("character-card")}
-                className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-xl hover:border-purple-500 hover:bg-purple-50 hover:shadow-md transition-all group bg-white opacity-60 cursor-not-allowed"
+                className="glass-well flex flex-col items-center justify-center p-4 rounded-2xl group opacity-60 cursor-not-allowed"
                 disabled
               >
                 <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-2">
@@ -128,14 +128,14 @@ const HomePage = ({ onSelectTool, globalAuthor, setGlobalAuthor }) => {
             <div className="flex gap-3">
               <a
                 href="#"
-                className="flex-1 py-2 px-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-xs font-bold text-center transition-colors flex items-center justify-center gap-2"
+                className="glass-btn flex-1 py-2 px-3 bg-white/60 hover:bg-white/80 text-gray-700 rounded-full text-xs font-bold text-center transition-colors flex items-center justify-center gap-2"
               >
                 <span>我的噗浪</span>
               </a>
 
               <a
                 href="#"
-                className="flex-1 py-2 px-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-xs font-bold text-center transition-colors flex items-center justify-center gap-2"
+                className="glass-btn flex-1 py-2 px-3 bg-white/60 hover:bg-white/80 text-gray-700 rounded-full text-xs font-bold text-center transition-colors flex items-center justify-center gap-2"
               >
                 <span>我的Threads</span>
               </a>
@@ -143,7 +143,7 @@ const HomePage = ({ onSelectTool, globalAuthor, setGlobalAuthor }) => {
 
             <a
               href="#"
-              className="mt-3 w-full py-3 px-4 bg-pink-50 text-pink-600 hover:bg-pink-100 hover:text-pink-700 border border-pink-200 rounded-lg text-sm font-bold text-center transition-all flex items-center justify-center gap-2 group"
+              className="glass-btn mt-3 w-full py-3 px-4 bg-pink-50/80 text-pink-600 hover:bg-pink-100 hover:text-pink-700 border border-pink-200/70 rounded-full text-sm font-bold text-center transition-all flex items-center justify-center gap-2 group"
             >
               <span className="group-hover:scale-110 transition-transform">
                 🥤
@@ -154,7 +154,7 @@ const HomePage = ({ onSelectTool, globalAuthor, setGlobalAuthor }) => {
         </div>
 
         {/* 5. 頁尾版權宣告 */}
-        <div className="bg-gray-50 p-4 text-center text-[10px] text-gray-400 border-t border-gray-100">
+        <div className="bg-white/40 p-4 text-center text-[10px] text-gray-400 border-t border-gray-100/60">
           © 2025 Adabanipal Library • Free & Open Source
         </div>
       </div>

@@ -31,12 +31,12 @@ const StylePanel = ({
                 <label className="block text-xs font-semibold text-gray-500 mb-2">
                     版面比例
                 </label>
-                <div className="flex rounded-md shadow-sm" role="group">
+                <div className="glass-segment flex rounded-full p-1" role="group">
                     <button
                         onClick={() => setAspectRatio("9/16")}
-                        className={`px-2 py-3 border flex-1 rounded-l-lg flex items-center justify-center gap-2 transition-all ${aspectRatio === "9/16"
-                                ? "bg-indigo-50 text-indigo-700 border-indigo-200 ring-1 ring-indigo-300 z-10"
-                                : "bg-white hover:bg-gray-50"
+                        className={`glass-btn px-2 py-2.5 flex-1 rounded-full flex items-center justify-center gap-2 transition-all ${aspectRatio === "9/16"
+                                ? "bg-white shadow text-indigo-700"
+                                : "hover:bg-white/60 text-gray-600"
                             }`}
                     >
                         <Maximize size={18} className="text-gray-500" />
@@ -44,9 +44,9 @@ const StylePanel = ({
                     </button>
                     <button
                         onClick={() => setAspectRatio("3/4")}
-                        className={`px-2 py-3 border-t border-b border-r flex-1 flex items-center justify-center gap-2 transition-all ${aspectRatio === "3/4"
-                                ? "bg-indigo-50 text-indigo-700 border-indigo-200 ring-1 ring-indigo-300 z-10"
-                                : "bg-white hover:bg-gray-50"
+                        className={`glass-btn px-2 py-2.5 flex-1 rounded-full flex items-center justify-center gap-2 transition-all ${aspectRatio === "3/4"
+                                ? "bg-white shadow text-indigo-700"
+                                : "hover:bg-white/60 text-gray-600"
                             }`}
                     >
                         <LayoutIcon
@@ -57,9 +57,9 @@ const StylePanel = ({
                     </button>
                     <button
                         onClick={() => setAspectRatio("1/1")}
-                        className={`px-2 py-3 border-t border-b border-r flex-1 rounded-r-lg flex items-center justify-center gap-2 transition-all ${aspectRatio === "1/1"
-                                ? "bg-indigo-50 text-indigo-700 border-indigo-200 ring-1 ring-indigo-300 z-10"
-                                : "bg-white hover:bg-gray-50"
+                        className={`glass-btn px-2 py-2.5 flex-1 rounded-full flex items-center justify-center gap-2 transition-all ${aspectRatio === "1/1"
+                                ? "bg-white shadow text-indigo-700"
+                                : "hover:bg-white/60 text-gray-600"
                             }`}
                     >
                         <LayoutIcon size={18} className="text-gray-500" />
@@ -108,30 +108,30 @@ const StylePanel = ({
                 <label className="block text-xs font-semibold text-gray-500 mb-2">
                     字體風格
                 </label>
-                <div className="flex rounded-md shadow-sm" role="group">
+                <div className="glass-segment flex rounded-full p-1" role="group">
                     <button
                         onClick={() => setFontFamily("rounded")}
-                        className={`px-4 py-2 text-sm border flex-1 rounded-l-lg ${fontFamily === "rounded"
-                                ? "bg-indigo-50 text-indigo-700"
-                                : "bg-white"
+                        className={`glass-btn px-4 py-2 text-sm flex-1 rounded-full ${fontFamily === "rounded"
+                                ? "bg-white shadow text-indigo-700"
+                                : "hover:bg-white/60 text-gray-600"
                             }`}
                     >
                         圓體
                     </button>
                     <button
                         onClick={() => setFontFamily("sans")}
-                        className={`px-4 py-2 text-sm border-t border-b border-r flex-1 ${fontFamily === "sans"
-                                ? "bg-indigo-50 text-indigo-700"
-                                : "bg-white"
+                        className={`glass-btn px-4 py-2 text-sm flex-1 rounded-full ${fontFamily === "sans"
+                                ? "bg-white shadow text-indigo-700"
+                                : "hover:bg-white/60 text-gray-600"
                             }`}
                     >
                         黑體
                     </button>
                     <button
                         onClick={() => setFontFamily("serif")}
-                        className={`px-4 py-2 text-sm border-t border-b border-r flex-1 rounded-r-lg ${fontFamily === "serif"
-                                ? "bg-indigo-50 text-indigo-700"
-                                : "bg-white"
+                        className={`glass-btn px-4 py-2 text-sm flex-1 rounded-full ${fontFamily === "serif"
+                                ? "bg-white shadow text-indigo-700"
+                                : "hover:bg-white/60 text-gray-600"
                             }`}
                     >
                         宋體
@@ -183,39 +183,39 @@ const StylePanel = ({
                 <label className="block text-xs font-semibold text-gray-500 mb-2">
                     對齊方式
                 </label>
-                <div className="flex gap-2 bg-gray-100 p-1 rounded-lg w-max">
+                <div className="glass-segment flex gap-1 p-1 rounded-full w-max">
                     <button
                         onClick={() => setTextAlign("left")}
-                        className={`p-2 rounded ${textAlign === "left"
+                        className={`glass-btn p-2 rounded-full ${textAlign === "left"
                                 ? "bg-white shadow text-indigo-600"
-                                : "text-gray-500"
+                                : "text-gray-500 hover:bg-white/60"
                             }`}
                     >
                         <AlignLeft size={18} />
                     </button>
                     <button
                         onClick={() => setTextAlign("center")}
-                        className={`p-2 rounded ${textAlign === "center"
+                        className={`glass-btn p-2 rounded-full ${textAlign === "center"
                                 ? "bg-white shadow text-indigo-600"
-                                : "text-gray-500"
+                                : "text-gray-500 hover:bg-white/60"
                             }`}
                     >
                         <AlignCenter size={18} />
                     </button>
                     <button
                         onClick={() => setTextAlign("right")}
-                        className={`p-2 rounded ${textAlign === "right"
+                        className={`glass-btn p-2 rounded-full ${textAlign === "right"
                                 ? "bg-white shadow text-indigo-600"
-                                : "text-gray-500"
+                                : "text-gray-500 hover:bg-white/60"
                             }`}
                     >
                         <AlignRight size={18} />
                     </button>
                     <button
                         onClick={() => setTextAlign("justify")}
-                        className={`p-2 rounded ${textAlign === "justify"
+                        className={`glass-btn p-2 rounded-full ${textAlign === "justify"
                                 ? "bg-white shadow text-indigo-600"
-                                : "text-gray-500"
+                                : "text-gray-500 hover:bg-white/60"
                             }`}
                     >
                         <AlignJustify size={18} />

@@ -46,7 +46,7 @@ const ContentPanel = ({
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="glass-input w-full p-2 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     placeholder="輸入文章標題"
                 />
             </div>
@@ -58,12 +58,12 @@ const ContentPanel = ({
                     type="text"
                     value={author}
                     onChange={(e) => setAuthor(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="glass-input w-full p-2 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     placeholder="@yourname"
                 />
             </div>
 
-            <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+            <div className="glass-well p-3 rounded-xl">
                 <div className="flex justify-between items-center mb-2 mt-2">
                     <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider flex items-center gap-1">
                         <QrCodeIcon size={14} /> 頁尾 QR Code
@@ -85,14 +85,14 @@ const ContentPanel = ({
                             type="text"
                             value={qrCodeContent}
                             onChange={(e) => setQrCodeContent(e.target.value)}
-                            className="w-full p-2 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-indigo-500"
+                            className="glass-input w-full p-2 text-xs rounded-lg focus:ring-1 focus:ring-indigo-500"
                             placeholder="輸入網址"
                         />
                         <input
                             type="text"
                             value={qrCodeLabel}
                             onChange={(e) => setQrCodeLabel(e.target.value)}
-                            className="w-full p-2 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-indigo-500"
+                            className="glass-input w-full p-2 text-xs rounded-lg focus:ring-1 focus:ring-indigo-500"
                             placeholder="輸入小字"
                         />
                     </div>
@@ -103,7 +103,7 @@ const ContentPanel = ({
                 <label className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">
                     匯入文字
                 </label>
-                <label className="flex items-center justify-center gap-2 p-2 border border-dashed border-gray-300 rounded hover:bg-gray-50 cursor-pointer text-sm text-gray-600 transition-colors">
+                <label className="flex items-center justify-center gap-2 p-2 border border-dashed border-gray-300/70 bg-white/50 rounded-xl hover:bg-white/70 cursor-pointer text-sm text-gray-600 transition-colors">
                     <Upload size={16} /> <span>上傳 .txt 或 .docx</span>
                     <input
                         type="file"
@@ -123,9 +123,9 @@ const ContentPanel = ({
                     <div className="flex gap-1">
                         <button
                             onClick={() => setAutoIndent(!autoIndent)}
-                            className={`p-1 rounded ${autoIndent
+                            className={`glass-btn p-1 rounded-full ${autoIndent
                                 ? "bg-indigo-100 text-indigo-600"
-                                : "hover:bg-gray-100 text-gray-600"
+                                : "hover:bg-white/70 text-gray-600"
                                 }`}
                             title="段落自動縮排 (1字元)"
                         >
@@ -133,21 +133,21 @@ const ContentPanel = ({
                         </button>
                         <button
                             onClick={() => insertFormat("b")}
-                            className="p-1 hover:bg-gray-100 rounded"
+                            className="glass-btn p-1 hover:bg-white/70 rounded-full"
                             title="粗體"
                         >
                             <BoldIcon size={14} />
                         </button>
                         <button
                             onClick={() => insertFormat("i")}
-                            className="p-1 hover:bg-gray-100 rounded"
+                            className="glass-btn p-1 hover:bg-white/70 rounded-full"
                             title="斜體"
                         >
                             <ItalicIcon size={14} />
                         </button>
                         <button
                             onClick={() => insertFormat("hr")}
-                            className="p-1 hover:bg-gray-100 rounded"
+                            className="glass-btn p-1 hover:bg-white/70 rounded-full"
                             title="分隔線"
                         >
                             <MinusIcon size={14} />
@@ -158,17 +158,17 @@ const ContentPanel = ({
                     ref={textAreaRef}
                     value={text}
                     onChange={(e) => setText(e.target.value)}
-                    className="w-full h-48 p-3 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 text-sm leading-relaxed whitespace-pre-wrap font-mono"
+                    className="glass-input w-full h-48 p-3 rounded-lg focus:ring-2 focus:ring-indigo-500 text-sm leading-relaxed whitespace-pre-wrap font-mono"
                     placeholder="在此貼上你的小說內容..."
                 />
             </div>
 
-            <div className="p-3 bg-gray-100 rounded-lg space-y-3">
+            <div className="glass-well p-3 rounded-xl space-y-3">
                 <div className="flex items-center justify-between text-indigo-700 font-semibold text-sm">
                     <div>分頁資訊</div>{" "}
                     {isCalculating && <span className="animate-pulse">運算中...</span>}
                 </div>
-                <div className="flex items-center justify-between bg-white p-2 rounded border border-gray-200">
+                <div className="flex items-center justify-between bg-white/80 p-2 rounded-full border border-gray-200/60">
                     <div className="flex items-center gap-2 text-sm text-gray-700">
                         {keepSentences ? (
                             <CheckCircle2 size={16} />

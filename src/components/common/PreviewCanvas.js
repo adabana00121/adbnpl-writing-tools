@@ -30,15 +30,15 @@ const PreviewCanvas = ({
   return (
     <div
       ref={containerRef}
-      className="flex-1 bg-gray-200 relative flex flex-col overflow-hidden h-full"
+      className="flex-1 preview-desk relative flex flex-col overflow-hidden h-full"
     >
-      {/* --- 右上角縮放控制列 --- */}
-      <div className="absolute top-4 right-4 z-50 flex gap-2 bg-white p-1 rounded-lg shadow border border-gray-200">
+      {/* --- 右上角縮放控制列（浮在預覽上的玻璃膠囊） --- */}
+      <div className="glass-pill absolute top-4 right-4 z-50 flex gap-1 p-1 items-center">
         <button
           onClick={() =>
             setManualScale((prev) => Math.max(0.3, (prev || scale) - 0.1))
           }
-          className="p-2 hover:bg-gray-100 rounded text-gray-600"
+          className="glass-btn p-2 hover:bg-white/70 rounded-full text-gray-600"
           title="縮小"
         >
           <ZoomOut size={16} />
@@ -50,7 +50,7 @@ const PreviewCanvas = ({
           onClick={() =>
             setManualScale((prev) => Math.min(2.0, (prev || scale) + 0.1))
           }
-          className="p-2 hover:bg-gray-100 rounded text-gray-600"
+          className="glass-btn p-2 hover:bg-white/70 rounded-full text-gray-600"
           title="放大"
         >
           <ZoomIn size={16} />

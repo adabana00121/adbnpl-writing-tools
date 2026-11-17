@@ -68,10 +68,10 @@ const GlobalStyle = ({ activeStyle }) => (
         pointer-events: none;
     }
 
-    /* 介面相關微調 */
+    /* 介面相關微調（僅側欄控制項使用，收據原稿不受影響） */
     .label-header { display: flex; align-items: center; gap: 0.25rem; font-size: 0.75rem; font-weight: 700; color: #6b7280; text-transform: uppercase; margin-bottom: 0.5rem; }
     .label-text { display: block; font-size: 0.75rem; font-weight: 600; color: #9ca3af; margin-bottom: 0.1rem; }
-    .input-field { width: 100%; padding: 0.5rem; border: 1px solid #e5e7eb; border-radius: 0.375rem; transition: all; background: white; }
+    .input-field { width: 100%; padding: 0.5rem; border: 1px solid rgba(10, 10, 10, 0.12); border-radius: 0.5rem; transition: all; background: rgba(255, 255, 255, 0.72); }
     .input-field:focus { outline: none; border-color: #10b981; box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1); }
   `}</style>
 );
@@ -147,8 +147,8 @@ const ReceiptGenerator = ({ globalAuthor, onBack }) => {
       onBack={onBack}
       sidebar={
         <>
-          <div className="flex border-b border-gray-200">
-            <div className="flex-1 py-3 text-sm font-medium flex justify-center items-center gap-2 text-emerald-600 border-b-2 border-emerald-600 bg-emerald-50">
+          <div className="glass-tabstrip flex gap-1 p-2">
+            <div className="flex-1 py-2.5 text-sm font-medium flex justify-center items-center gap-2 text-emerald-700 bg-white/85 shadow rounded-full">
               基本設定
             </div>
           </div>
@@ -161,7 +161,7 @@ const ReceiptGenerator = ({ globalAuthor, onBack }) => {
                 <select
                   value={style}
                   onChange={(e) => setStyle(e.target.value)}
-                  className="input-field w-full p-2 border rounded"
+                  className="input-field w-full p-2"
                 >
                   {Object.keys(RECEIPT_THEMES).map((k) => (
                     <option key={k} value={k}>
@@ -174,14 +174,14 @@ const ReceiptGenerator = ({ globalAuthor, onBack }) => {
                 <label className="label-header">
                   <Languages size={14} /> 語言
                 </label>
-                <div className="flex bg-gray-100 rounded p-1">
+                <div className="glass-segment flex rounded-full p-1">
                   {["zh", "en"].map((l) => (
                     <button
                       key={l}
                       onClick={() => setLang(l)}
-                      className={`flex-1 text-xs py-1.5 rounded ${lang === l
+                      className={`glass-btn flex-1 text-xs py-1.5 rounded-full ${lang === l
                           ? "bg-white shadow text-emerald-600 font-bold"
-                          : "text-gray-500"
+                          : "text-gray-500 hover:bg-white/60"
                         }`}
                     >
                       {l.toUpperCase()}
@@ -240,7 +240,7 @@ const ReceiptGenerator = ({ globalAuthor, onBack }) => {
                 {items.map((item, idx) => (
                   <div
                     key={item.id}
-                    className="bg-gray-50 p-3 rounded border border-gray-200 relative group"
+                    className="glass-well p-3 rounded-xl relative group"
                   >
                     <button
                       onClick={() => removeItem(item.id)}
@@ -269,7 +269,7 @@ const ReceiptGenerator = ({ globalAuthor, onBack }) => {
                           onChange={(e) =>
                             updateItem(item.id, "count", e.target.value)
                           }
-                          className="w-full bg-white border border-gray-200 rounded px-1 py-0.5 text-xs"
+                          className="w-full bg-white/80 border border-gray-200/60 rounded-lg px-1 py-0.5 text-xs"
                         />
                       </div>
                       <div className="flex items-center gap-2">
@@ -280,7 +280,7 @@ const ReceiptGenerator = ({ globalAuthor, onBack }) => {
                           onChange={(e) =>
                             updateItem(item.id, "price", e.target.value)
                           }
-                          className="w-full bg-white border border-gray-200 rounded px-1 py-0.5 text-xs"
+                          className="w-full bg-white/80 border border-gray-200/60 rounded-lg px-1 py-0.5 text-xs"
                         />
                       </div>
                     </div>
@@ -306,11 +306,11 @@ const ReceiptGenerator = ({ globalAuthor, onBack }) => {
             </div>
           </div>
 
-          <div className="p-4 border-t border-gray-200 bg-white">
+          <div className="glass-bar p-4">
             <button
               onClick={onDownloadClick}
               disabled={isGenerating}
-              className="w-full py-3 px-4 rounded-lg flex items-center justify-center gap-2 font-bold text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 transition-all active:scale-[0.98]"
+              className="glass-btn-solid w-full py-3 px-4 rounded-full flex items-center justify-center gap-2 font-bold text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 transition-all active:scale-[0.98]"
             >
               {isGenerating ? (
                 <Loader2 className="animate-spin" size={20} />
