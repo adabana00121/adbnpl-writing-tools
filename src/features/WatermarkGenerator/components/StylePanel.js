@@ -56,6 +56,19 @@ const StylePanel = ({
                         <span className="text-sm">3:4</span>
                     </button>
                     <button
+                        onClick={() => setAspectRatio("4/5")}
+                        className={`glass-btn px-2 py-2.5 flex-1 rounded-full flex items-center justify-center gap-2 transition-all ${aspectRatio === "4/5"
+                                ? "bg-white shadow text-emerald-700"
+                                : "hover:bg-white/60 text-gray-600"
+                            }`}
+                    >
+                        <LayoutIcon
+                            size={18}
+                            className="text-gray-500 scale-y-105"
+                        />
+                        <span className="text-sm">4:5</span>
+                    </button>
+                    <button
                         onClick={() => setAspectRatio("1/1")}
                         className={`glass-btn px-2 py-2.5 flex-1 rounded-full flex items-center justify-center gap-2 transition-all ${aspectRatio === "1/1"
                                 ? "bg-white shadow text-emerald-700"

@@ -129,6 +129,8 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
     if (aspectRatio === "9/16") height = Math.floor(CONTAINER_WIDTH * (16 / 9));
     else if (aspectRatio === "3/4")
       height = Math.floor(CONTAINER_WIDTH * (4 / 3));
+    else if (aspectRatio === "4/5")
+      height = Math.floor(CONTAINER_WIDTH * (5 / 4));
     else height = CONTAINER_WIDTH;
     setContainerHeight(height);
   }, [aspectRatio]);
