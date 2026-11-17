@@ -90,8 +90,8 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
 
   const [theme, setTheme] = useState("light");
   const [fontFamily, setFontFamily] = useState("rounded");
-  const [fontSize, setFontSize] = useState(18);
-  const [lineHeight, setLineHeight] = useState(1.8);
+  const [fontSize, setFontSize] = useState(21);
+  const [lineHeight, setLineHeight] = useState(1.7);
   const [textAlign, setTextAlign] = useState("justify");
 
   const [aspectRatio, setAspectRatio] = useState("9/16");

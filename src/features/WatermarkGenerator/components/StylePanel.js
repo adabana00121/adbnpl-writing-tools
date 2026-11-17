@@ -91,8 +91,8 @@ const StylePanel = ({
                         { id: "sepia", color: "bg-[#f4ecd8] border-[#dccfc0]" },
                         { id: "dark", color: "bg-gray-800 border-gray-700" },
                         {
-                            id: "midnight",
-                            color: "bg-[#1a202c] border-slate-700",
+                            id: "paper",
+                            color: "bg-[#F5F4EE] border-[#0A0A0A]",
                         },
                     ].map((t) => (
                         <button
@@ -101,12 +101,12 @@ const StylePanel = ({
                             className={`h-12 rounded-lg border-2 flex items-center justify-center transition-all ${t.color
                                 } ${theme === t.id
                                     ? "ring-2 ring-gray-900"
-                                    : "border-gray-200"
+                                    : ""
                                 }`}
                         >
                             {theme === t.id && (
                                 <span
-                                    className={`w-2 h-2 rounded-full ${t.id === "light" || t.id === "sepia"
+                                    className={`w-2 h-2 rounded-full ${t.id === "light" || t.id === "sepia" || t.id === "paper"
                                             ? "bg-gray-900"
                                             : "bg-white"
                                         }`}

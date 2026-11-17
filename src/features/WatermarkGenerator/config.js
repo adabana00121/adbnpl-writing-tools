@@ -50,11 +50,12 @@ export const THEMES = {
     sub: "text-gray-400",
     border: "border-gray-700",
   },
-  midnight: {
-    bg: "bg-[#1a202c]",
-    text: "text-slate-200",
-    sub: "text-slate-500",
-    border: "border-slate-700",
+  // paper：網站風格（paper #F5F4EE＋ink #0A0A0A＋墨色框線），取代與 dark 太像的 midnight
+  paper: {
+    bg: "bg-[#F5F4EE]",
+    text: "text-[#0A0A0A]",
+    sub: "text-gray-500",
+    border: "border-[#0A0A0A]",
   },
 };
 
@@ -62,7 +63,7 @@ export const QR_COLORS = {
   light: "#111827",
   sepia: "#5b4636",
   dark: "#f3f4f6",
-  midnight: "#e2e8f0",
+  paper: "#0A0A0A",
 };
 
 export const FONT_STYLES = {
