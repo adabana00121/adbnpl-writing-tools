@@ -36,7 +36,7 @@ const WatermarkPanel = ({
                 <div className="mt-1 text-right">
                     <button
                         onClick={() => setWatermarkText("禁止轉載")}
-                        className="text-[10px] text-gray-400 hover:text-indigo-600"
+                        className="text-[10px] text-gray-400 hover:text-emerald-600"
                     >
                         重設為「禁止轉載」
                     </button>
@@ -51,7 +51,7 @@ const WatermarkPanel = ({
                     <button
                         onClick={() => setWatermarkType("grid")}
                         className={`glass-btn flex flex-col items-center justify-center p-3 border rounded-xl ${watermarkType === "grid"
-                                ? "border-indigo-500 bg-indigo-50"
+                                ? "border-emerald-500 bg-emerald-50"
                                 : "bg-white/60 border-gray-200/60 hover:bg-white/80"
                             }`}
                     >
@@ -61,7 +61,7 @@ const WatermarkPanel = ({
                     <button
                         onClick={() => setWatermarkType("center")}
                         className={`glass-btn flex flex-col items-center justify-center p-3 border rounded-xl ${watermarkType === "center"
-                                ? "border-indigo-500 bg-indigo-50"
+                                ? "border-emerald-500 bg-emerald-50"
                                 : "bg-white/60 border-gray-200/60 hover:bg-white/80"
                             }`}
                     >
@@ -71,7 +71,7 @@ const WatermarkPanel = ({
                     <button
                         onClick={() => setWatermarkType("corner")}
                         className={`glass-btn flex flex-col items-center justify-center p-3 border rounded-xl ${watermarkType === "corner"
-                                ? "border-indigo-500 bg-indigo-50"
+                                ? "border-emerald-500 bg-emerald-50"
                                 : "bg-white/60 border-gray-200/60 hover:bg-white/80"
                             }`}
                     >
@@ -86,7 +86,7 @@ const WatermarkPanel = ({
                     <label className="text-xs font-semibold text-gray-500">
                         透明度
                     </label>
-                    <span className="text-xs text-indigo-600">
+                    <span className="text-xs text-emerald-600">
                         {Math.round(watermarkOpacity * 100)}%
                     </span>
                 </div>
@@ -97,7 +97,7 @@ const WatermarkPanel = ({
                     step="0.05"
                     value={watermarkOpacity}
                     onChange={(e) => setWatermarkOpacity(parseFloat(e.target.value))}
-                    className="w-full h-2 accent-indigo-600"
+                    className="w-full h-2 accent-emerald-600"
                 />
             </div>
         </div>

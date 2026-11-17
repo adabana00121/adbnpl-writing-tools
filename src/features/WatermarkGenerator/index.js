@@ -333,7 +333,6 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
     <Layout
       title="文手排版助手"
       icon={Type}
-      accent="indigo"
       onBack={onBack}
       sidebar={
         <>
@@ -341,7 +340,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
             <button
               onClick={() => setActiveTab("content")}
               className={`glass-btn flex-1 py-2.5 text-sm font-medium flex justify-center items-center gap-2 rounded-full ${activeTab === "content"
-                ? "text-indigo-700 bg-white/85 shadow"
+                ? "text-emerald-700 bg-white/85 shadow"
                 : "text-gray-500 hover:bg-white/50"
                 }`}
             >
@@ -350,7 +349,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
             <button
               onClick={() => setActiveTab("style")}
               className={`glass-btn flex-1 py-2.5 text-sm font-medium flex justify-center items-center gap-2 rounded-full ${activeTab === "style"
-                ? "text-indigo-700 bg-white/85 shadow"
+                ? "text-emerald-700 bg-white/85 shadow"
                 : "text-gray-500 hover:bg-white/50"
                 }`}
             >
@@ -359,7 +358,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
             <button
               onClick={() => setActiveTab("watermark")}
               className={`glass-btn flex-1 py-2.5 text-sm font-medium flex justify-center items-center gap-2 rounded-full ${activeTab === "watermark"
-                ? "text-indigo-700 bg-white/85 shadow"
+                ? "text-emerald-700 bg-white/85 shadow"
                 : "text-gray-500 hover:bg-white/50"
                 }`}
             >
@@ -455,7 +454,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
               <button
                 onClick={onDownloadClick}
                 disabled={isGenerating}
-                className="glass-btn-solid flex-1 py-3 px-3 rounded-full flex items-center justify-center gap-2 font-bold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
+                className="glass-btn-solid flex-1 py-3 px-3 rounded-full flex items-center justify-center gap-2 font-bold text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50"
               >
                 {isGenerating ? (
                   <Loader2 className="animate-spin" size={18} />

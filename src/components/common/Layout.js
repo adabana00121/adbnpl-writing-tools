@@ -7,15 +7,10 @@ import { ArrowLeft } from "lucide-react";
  * @param {ReactNode} children - 右側主要內容 (預覽區)
  * @param {string} title - 工具標題
  * @param {ReactNode} icon - 工具圖標 Component
- * @param {string} accent - 工具代表色 (indigo / emerald)，只用在圖示 chip 上
  * @param {function} onBack - 返回首頁的函式
+ * v10：圖示 chip 改墨色（自用工具不分品牌色），emerald 只留給狀態與動作。
  */
-const ACCENT_CHIP = {
-  indigo: "bg-indigo-600",
-  emerald: "bg-emerald-600",
-};
-
-const Layout = ({ sidebar, children, title, icon: Icon, accent = "indigo", onBack }) => {
+const Layout = ({ sidebar, children, title, icon: Icon, onBack }) => {
   return (
     // Root: 手機版 min-h-screen (可捲動), 電腦版 h-screen (固定視窗)
     // 背景透明，讓 body 的紙色環境暈透出來給玻璃折射
@@ -35,9 +30,7 @@ const Layout = ({ sidebar, children, title, icon: Icon, accent = "indigo", onBac
           <h1 className="text-xl font-bold flex items-center gap-2 text-gray-900">
             {Icon && (
               <span
-                className={`w-8 h-8 rounded-full ${
-                  ACCENT_CHIP[accent] || ACCENT_CHIP.indigo
-                } text-white flex items-center justify-center shrink-0`}
+                className="w-8 h-8 rounded-full bg-[#0A0A0A] text-white flex items-center justify-center shrink-0"
               >
                 <Icon size={16} />
               </span>

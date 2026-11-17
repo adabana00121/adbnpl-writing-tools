@@ -35,7 +35,7 @@ const StylePanel = ({
                     <button
                         onClick={() => setAspectRatio("9/16")}
                         className={`glass-btn px-2 py-2.5 flex-1 rounded-full flex items-center justify-center gap-2 transition-all ${aspectRatio === "9/16"
-                                ? "bg-white shadow text-indigo-700"
+                                ? "bg-white shadow text-emerald-700"
                                 : "hover:bg-white/60 text-gray-600"
                             }`}
                     >
@@ -45,7 +45,7 @@ const StylePanel = ({
                     <button
                         onClick={() => setAspectRatio("3/4")}
                         className={`glass-btn px-2 py-2.5 flex-1 rounded-full flex items-center justify-center gap-2 transition-all ${aspectRatio === "3/4"
-                                ? "bg-white shadow text-indigo-700"
+                                ? "bg-white shadow text-emerald-700"
                                 : "hover:bg-white/60 text-gray-600"
                             }`}
                     >
@@ -58,7 +58,7 @@ const StylePanel = ({
                     <button
                         onClick={() => setAspectRatio("1/1")}
                         className={`glass-btn px-2 py-2.5 flex-1 rounded-full flex items-center justify-center gap-2 transition-all ${aspectRatio === "1/1"
-                                ? "bg-white shadow text-indigo-700"
+                                ? "bg-white shadow text-emerald-700"
                                 : "hover:bg-white/60 text-gray-600"
                             }`}
                     >
@@ -87,14 +87,14 @@ const StylePanel = ({
                             onClick={() => setTheme(t.id)}
                             className={`h-12 rounded-lg border-2 flex items-center justify-center transition-all ${t.color
                                 } ${theme === t.id
-                                    ? "ring-2 ring-indigo-500"
+                                    ? "ring-2 ring-emerald-500"
                                     : "border-gray-200"
                                 }`}
                         >
                             {theme === t.id && (
                                 <span
                                     className={`w-2 h-2 rounded-full ${t.id === "light" || t.id === "sepia"
-                                            ? "bg-indigo-600"
+                                            ? "bg-emerald-600"
                                             : "bg-white"
                                         }`}
                                 />
@@ -112,7 +112,7 @@ const StylePanel = ({
                     <button
                         onClick={() => setFontFamily("rounded")}
                         className={`glass-btn px-4 py-2 text-sm flex-1 rounded-full ${fontFamily === "rounded"
-                                ? "bg-white shadow text-indigo-700"
+                                ? "bg-white shadow text-emerald-700"
                                 : "hover:bg-white/60 text-gray-600"
                             }`}
                     >
@@ -121,7 +121,7 @@ const StylePanel = ({
                     <button
                         onClick={() => setFontFamily("sans")}
                         className={`glass-btn px-4 py-2 text-sm flex-1 rounded-full ${fontFamily === "sans"
-                                ? "bg-white shadow text-indigo-700"
+                                ? "bg-white shadow text-emerald-700"
                                 : "hover:bg-white/60 text-gray-600"
                             }`}
                     >
@@ -130,7 +130,7 @@ const StylePanel = ({
                     <button
                         onClick={() => setFontFamily("serif")}
                         className={`glass-btn px-4 py-2 text-sm flex-1 rounded-full ${fontFamily === "serif"
-                                ? "bg-white shadow text-indigo-700"
+                                ? "bg-white shadow text-emerald-700"
                                 : "hover:bg-white/60 text-gray-600"
                             }`}
                     >
@@ -143,7 +143,7 @@ const StylePanel = ({
                 <div className="flex justify-between mb-2">
                     <label className="block text-xs font-semibold text-gray-500">
                         字體大小{" "}
-                        <span className="text-xs font-mono text-indigo-600 ml-2">
+                        <span className="text-xs font-mono text-emerald-600 ml-2">
                             {fontSize}px
                         </span>
                     </label>
@@ -155,7 +155,7 @@ const StylePanel = ({
                     step="1"
                     value={fontSize}
                     onChange={(e) => setFontSize(parseInt(e.target.value))}
-                    className="w-full h-2 accent-indigo-600"
+                    className="w-full h-2 accent-emerald-600"
                 />
             </div>
 
@@ -163,7 +163,7 @@ const StylePanel = ({
                 <div className="flex justify-between mb-2">
                     <label className="block text-xs font-semibold text-gray-500">
                         行距{" "}
-                        <span className="text-xs font-mono text-indigo-600 ml-2">
+                        <span className="text-xs font-mono text-emerald-600 ml-2">
                             {lineHeight}
                         </span>
                     </label>
@@ -175,7 +175,7 @@ const StylePanel = ({
                     step="0.1"
                     value={lineHeight}
                     onChange={(e) => setLineHeight(parseFloat(e.target.value))}
-                    className="w-full h-2 accent-indigo-600"
+                    className="w-full h-2 accent-emerald-600"
                 />
             </div>
 
@@ -187,7 +187,7 @@ const StylePanel = ({
                     <button
                         onClick={() => setTextAlign("left")}
                         className={`glass-btn p-2 rounded-full ${textAlign === "left"
-                                ? "bg-white shadow text-indigo-600"
+                                ? "bg-white shadow text-emerald-600"
                                 : "text-gray-500 hover:bg-white/60"
                             }`}
                     >
@@ -196,7 +196,7 @@ const StylePanel = ({
                     <button
                         onClick={() => setTextAlign("center")}
                         className={`glass-btn p-2 rounded-full ${textAlign === "center"
-                                ? "bg-white shadow text-indigo-600"
+                                ? "bg-white shadow text-emerald-600"
                                 : "text-gray-500 hover:bg-white/60"
                             }`}
                     >
@@ -205,7 +205,7 @@ const StylePanel = ({
                     <button
                         onClick={() => setTextAlign("right")}
                         className={`glass-btn p-2 rounded-full ${textAlign === "right"
-                                ? "bg-white shadow text-indigo-600"
+                                ? "bg-white shadow text-emerald-600"
                                 : "text-gray-500 hover:bg-white/60"
                             }`}
                     >
@@ -214,7 +214,7 @@ const StylePanel = ({
                     <button
                         onClick={() => setTextAlign("justify")}
                         className={`glass-btn p-2 rounded-full ${textAlign === "justify"
-                                ? "bg-white shadow text-indigo-600"
+                                ? "bg-white shadow text-emerald-600"
                                 : "text-gray-500 hover:bg-white/60"
                             }`}
                     >
