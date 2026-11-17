@@ -18,6 +18,11 @@
    v8：三張參考圖收尾——殼更透（0.15）、亮緣更亮、顆粒加重、
    面板也加折射（#lg-thick，Chromium 限定）；字區（well／input）
    維持較不透，分層是 Apple 做法，不是偷懶。
+   v9：她選 B（透鏡折射）＋背景降鮮豔——#lg-thick 噪點位移退役，
+   改 JS 依面板尺寸生成 SDF 位移圖（中心平、邊緣彎，見 utils/
+   lensRefraction.js）；面板 tint 改 alpha 漸層、亮度集中邊緣；
+   背景四色改柔和粉彩、輝光降 alpha、紙紗加厚，顆粒保留（柔和
+   背景更靠顆粒讓折射看得見）。
    ============================================================ */
 
 :root {
@@ -36,18 +41,18 @@
 
 /* 場景背景：純 CSS 漸層＋SVG 噪點顆粒，零圖片檔案（push-files
    不收二進位，圖片只能走 base64 塞 CSS，沒必要）。漸層配色取
-   自 Pexels Codioful 7130491（紫→粉→薄荷→奶油）；顆粒是給玻
+   自 Pexels Codioful 7130491（紫→粉→薄荷→奶油），v9 降鮮豔改柔和粉彩；顆粒是給玻
    璃看的——顆粒在玻璃外看得見、進玻璃被糊掉，模糊感才成立，
    平滑漸層糊不糊根本看不出來。淺色紗罩在最上層保住文字對比。 */
 body {
   background-color: var(--paper);
   background-image:
-    linear-gradient(rgba(245, 244, 238, 0.2), rgba(245, 244, 238, 0.2)),
+    linear-gradient(rgba(245, 244, 238, 0.32), rgba(245, 244, 238, 0.32)),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"),
-    radial-gradient(60rem 42rem at 6% 0%, rgba(124, 58, 237, 0.55) 0%, rgba(124, 58, 237, 0) 60%),
-    radial-gradient(50rem 36rem at 102% 28%, rgba(45, 212, 191, 0.5) 0%, rgba(45, 212, 191, 0) 60%),
-    radial-gradient(48rem 40rem at 16% 102%, rgba(236, 72, 153, 0.45) 0%, rgba(236, 72, 153, 0) 60%),
-    linear-gradient(160deg, #c4b5fd 0%, #f9a8d4 35%, #a7f3d0 68%, #fef9c3 100%);
+    radial-gradient(60rem 42rem at 6% 0%, rgba(124, 58, 237, 0.34) 0%, rgba(124, 58, 237, 0) 60%),
+    radial-gradient(50rem 36rem at 102% 28%, rgba(45, 212, 191, 0.3) 0%, rgba(45, 212, 191, 0) 60%),
+    radial-gradient(48rem 40rem at 16% 102%, rgba(236, 72, 153, 0.28) 0%, rgba(236, 72, 153, 0) 60%),
+    linear-gradient(160deg, #d3c8f2 0%, #f4c9d8 35%, #bfe6d8 68%, #f8eecb 100%);
   background-blend-mode: normal, overlay, normal, normal, normal, normal;
   background-size: auto, 240px 240px, cover, cover, cover, cover;
   background-position: center;
@@ -57,14 +62,22 @@ body {
 
 /* ---------- 玻璃本體：有 backdrop-filter 的只此六種 ---------- */
 
-/* 側邊欄 / 首頁卡片：主玻璃面板 */
+/* 側邊欄 / 首頁卡片：主玻璃面板。v9（B 方案）：tint 改 alpha 漸層
+   （左上較厚、右下較透，模擬厚度）、亮度集中邊緣（Fresnel 式）；
+   Chromium 上 JS 再掛 SDF 透鏡位移（見 utils/lensRefraction.js），
+   非 Chromium 走這裡的 blur 退路。 */
 .glass-panel {
-  background-color: var(--glass-tint);
-  background-image: var(--glass-sheen);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  backdrop-filter: blur(14px) saturate(1.4);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-rim), var(--glass-shadow);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.06) 100%);
+  -webkit-backdrop-filter: blur(10px) saturate(1.6);
+  backdrop-filter: blur(10px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.35),
+    inset 1px 0 0 rgba(255, 255, 255, 0.25),
+    inset -1px 0 0 rgba(255, 255, 255, 0.25),
+    inset 0 0 28px rgba(255, 255, 255, 0.14),
+    var(--glass-shadow);
 }
 
 /* 工具標題列：淺色玻璃 + 墨字，工具色只留在圖示小 chip 上。
@@ -125,17 +138,12 @@ body {
 
 /* 折射：只有 Chromium 能把 url() 濾鏡用在 backdrop-filter 上。
    JS 偵測到 Chromium 才在 <html> 加 .has-refraction，其他瀏覽器
-   永遠看不到這兩條規則，blur 退路不受影響。#lg-refract（膠囊）
-   由 PreviewCanvas 內的 <svg> 提供；#lg-thick（面板）由 App 的
-   <GlassFilters /> 提供，三頁都掛，濾鏡本體永遠在 DOM 裡。 */
+   永遠看不到這條規則，blur 退路不受影響。#lg-refract（膠囊）
+   由 PreviewCanvas 內的 <svg> 提供。面板的透鏡折射（v9）改由
+   utils/lensRefraction.js 逐面板生成、寫 inline style，不走這裡。 */
 .has-refraction .glass-pill {
   -webkit-backdrop-filter: url(#lg-refract);
   backdrop-filter: url(#lg-refract);
-}
-
-.has-refraction .glass-panel {
-  -webkit-backdrop-filter: url(#lg-thick) blur(14px) saturate(1.4);
-  backdrop-filter: url(#lg-thick) blur(14px) saturate(1.4);
 }
 
 /* ---------- 玻璃上的元件：不疊 backdrop-filter ---------- */
