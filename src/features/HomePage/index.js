@@ -7,6 +7,7 @@ import { Type, Receipt as ReceiptIcon, TreeDeciduous, ArrowUpRight } from "lucid
  * 面板，顏色只留在圖示上；開發中的需求表單／角色設定已移除。
  * v10：圖示改墨色中性 chip（自用不分品牌色），贊助鈕改為網站連結。
  * v12：關於區改用網站關於頁自介原文；主色 emerald 全退役改墨色系。
+ * v15：關於區補筆名「謊花」；噗浪／Threads 按鈕接上真連結（原為 href="#" 佔位）。
  * @param {function} onSelectTool - 切換頁面的 callback
  * @param {string} globalAuthor - 全域筆名
  * @param {function} setGlobalAuthor - 設定全域筆名的方法
@@ -74,7 +75,12 @@ const HomePage = ({ onSelectTool, globalAuthor, setGlobalAuthor }) => {
 
         {/* 4. 關於與贊助區 */}
         <section className="glass-panel rounded-3xl p-5">
-          <h3 className="text-sm font-bold text-gray-800 mb-2">關於作者</h3>
+          <div className="flex items-baseline gap-2 mb-2">
+            <h3 className="text-base font-bold text-gray-900">謊花</h3>
+            <span className="text-[10px] font-bold tracking-widest text-gray-400">
+              關於作者
+            </span>
+          </div>
           <p className="text-xs text-gray-500 leading-relaxed mb-4">
             Z世代佛系文手。台灣人。
             <br />
@@ -87,14 +93,18 @@ const HomePage = ({ onSelectTool, globalAuthor, setGlobalAuthor }) => {
 
           <div className="flex gap-3">
             <a
-              href="#"
+              href="https://www.plurk.com/adabana00121"
+              target="_blank"
+              rel="noreferrer"
               className="glass-well glass-btn flex-1 py-2 px-3 hover:bg-white/80 text-gray-700 rounded-full text-xs font-bold text-center transition-colors flex items-center justify-center gap-2"
             >
               <span>我的噗浪</span>
             </a>
 
             <a
-              href="#"
+              href="https://www.threads.net/@adabanipal.library"
+              target="_blank"
+              rel="noreferrer"
               className="glass-well glass-btn flex-1 py-2 px-3 hover:bg-white/80 text-gray-700 rounded-full text-xs font-bold text-center transition-colors flex items-center justify-center gap-2"
             >
               <span>我的Threads</span>
