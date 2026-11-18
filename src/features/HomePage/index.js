@@ -8,6 +8,7 @@ import { Type, Receipt as ReceiptIcon, TreeDeciduous, ArrowUpRight } from "lucid
  * v10：圖示改墨色中性 chip（自用不分品牌色），贊助鈕改為網站連結。
  * v12：關於區改用網站關於頁自介原文；主色 emerald 全退役改墨色系。
  * v15：關於區補筆名「謊花」；噗浪／Threads 按鈕接上真連結（原為 href="#" 佔位）。
+ * v18：主名改「蔭刷樹」（印刷術諧音），副標改「文手小工具」。
  * @param {function} onSelectTool - 切換頁面的 callback
  * @param {string} globalAuthor - 全域筆名
  * @param {function} setGlobalAuthor - 設定全域筆名的方法
@@ -22,10 +23,10 @@ const HomePage = ({ onSelectTool, globalAuthor, setGlobalAuthor }) => {
             <TreeDeciduous className="text-gray-700" size={32} />
           </div>
           <h1 className="text-[28px] leading-tight font-bold text-gray-900 mb-1">
-            文手工具箱
+            蔭刷樹
           </h1>
           <p className="text-sm text-gray-500">
-            專為文手打造的生產力工具
+            文手小工具
           </p>
         </header>
 
