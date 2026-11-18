@@ -103,24 +103,25 @@ const StylePanel = ({
                         { id: "dark", color: "bg-gray-800 border-gray-700" },
                         {
                             id: "site",
-                            color: "bg-[#F5F4EE] border-[#0A0A0A]",
+                            color: "bg-[#F5F4EE]",
                             avatar: true,
                         },
                     ].map((t) => (
                         <button
                             key={t.id}
                             onClick={() => setTheme(t.id)}
-                            className={`h-12 rounded-lg border-2 relative overflow-hidden flex items-center justify-center transition-all ${t.color
+                            className={`h-12 rounded-lg ${t.avatar ? "border-0" : "border-2"} relative overflow-hidden flex items-center justify-center transition-all ${t.color
                                 } ${theme === t.id
                                     ? "ring-2 ring-gray-900"
                                     : ""
                                 }`}
                         >
                             {t.avatar && (
+                                // 大頭貼滿版：object-cover 置中裁切，樹臉在圖正中央，切不到臉
                                 <img
                                     src={SITE_AVATAR_URL}
                                     alt="網站風"
-                                    className="absolute inset-0 w-full h-full object-contain p-1"
+                                    className="absolute inset-0 w-full h-full object-cover"
                                     onError={(e) => {
                                         e.currentTarget.style.display = "none";
                                     }}
@@ -128,7 +129,7 @@ const StylePanel = ({
                             )}
                             {theme === t.id && (
                                 <span
-                                    className={`relative z-10 w-2 h-2 rounded-full ${t.id === "light" || t.id === "sepia" || t.id === "site"
+                                    className={`${t.avatar ? "absolute right-1.5 bottom-1.5" : "relative"} z-10 w-2 h-2 rounded-full ${t.id === "light" || t.id === "sepia" || t.id === "site"
                                             ? "bg-gray-900"
                                             : "bg-white"
                                         }`}

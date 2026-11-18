@@ -49,6 +49,8 @@ const SITE_TITLE_FONT = '"Noto Serif TC", "Songti TC", "PMingLiU", "New York", "
 const SITE_MONO_FONT = '"JetBrains Mono", "Noto Sans TC", monospace';
 const SITE_INK = "#0A0A0A";
 const SITE_ACCENT = "#059669"; // 正式站預設 accent（emerald）
+// 頁尾線左右內縮 36，對齊標頭雙線（標頭左右 padding 36）；上面那條雙線是 v16 原樣，不動。
+const SITE_RULE_INSET = 36;
 
 // --- 主要卡片渲染元件 ---
 export const WatermarkCard = ({
@@ -106,11 +108,12 @@ export const WatermarkCard = ({
         <div className={`w-full h-full whitespace-pre-wrap break-words ${theme.text}`} style={{ fontSize: `${fontSize}px`, lineHeight: lineHeight, textAlign: textAlign, textAlignLast: textAlign === "justify" ? "left" : "auto", textJustify: "inter-ideograph", wordBreak: "normal", lineBreak: "strict", ...fontStyle }} dangerouslySetInnerHTML={{ __html: pageText }} />
       </div>
 
-      {/* Footer：網站風是落款（館名＋作者 — 網域），不放 QR；一般主題維持原版式 */}
+      {/* Footer：網站風是落款（只留館名），不放 QR；一般主題維持原版式 */}
       {isSite ? (
-        <div className={`flex-none w-full flex flex-col justify-center items-center text-center ${theme.bg} z-20 relative`} style={{ height: `${height * layoutConfig.footerRatio}px`, borderTop: `4px solid ${SITE_INK}`, padding: "0 32px" }}>
+        <div className={`flex-none w-full flex flex-col justify-center items-center text-center ${theme.bg} z-20 relative`} style={{ height: `${height * layoutConfig.footerRatio}px`, padding: "0 32px" }}>
+          {/* 頁尾線：絕對定位貼頁尾頂邊，長度對齊標頭雙線，不佔版面 */}
+          <div style={{ position: "absolute", top: 0, left: SITE_RULE_INSET, right: SITE_RULE_INSET, borderTop: `4px solid ${SITE_INK}` }} />
           <div style={{ fontFamily: SITE_MONO_FONT, fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", color: SITE_INK }}>ADABANIPAL LIBRARY</div>
-          <div style={{ fontFamily: SITE_MONO_FONT, fontSize: 11, color: "#4A4A4A", marginTop: 6 }}>{meta.author} — ADABANIPAL.COM</div>
         </div>
       ) : (
         <div className={`flex-none w-full flex items-start ${qrSettings.show ? "justify-between" : "justify-center"} border-t ${theme.border} ${theme.bg} z-20 relative`} style={{ height: `${height * layoutConfig.footerRatio}px`, paddingTop: "24px", paddingLeft: "32px", paddingRight: "32px" }}>
@@ -127,9 +130,10 @@ export const WatermarkCard = ({
         </div>
       )}
 
-      {/* 網站風 4px 外框：絕對定位覆蓋層，不佔版面、不影響分頁幾何 */}
+      {/* 網站風 4px 外框：絕對定位覆蓋層，貼邊（v16 原樣），不佔版面、不影響分頁幾何；
+          黑底吃框問題的內縮／陰影／深色方案都還沒定，框先不動 */}
       {isSite && (
-        <div className="absolute inset-0 z-40 pointer-events-none" style={{ border: `4px solid ${SITE_INK}` }} />
+        <div className="absolute z-40 pointer-events-none" style={{ top: 0, left: 0, right: 0, bottom: 0, border: `4px solid ${SITE_INK}` }} />
       )}
     </div>
   );
