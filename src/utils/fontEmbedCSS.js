@@ -7,6 +7,8 @@
 const GOOGLE_FONTS_CSS_URLS = {
   sans: "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap",
   serif: "https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&display=swap",
+  // 網站風主題的標籤字（拉丁字母，子集很小）
+  mono: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap",
 };
 
 const cache = new Map();
@@ -58,6 +60,16 @@ export function getFontCssText(fontKey) {
   if (!cache.has(fontKey)) {
     const promise = (async () => {
       if (fontKey === "rounded") return buildLocalFontCssText();
+      // 網站風主題同時用三個字族（黑體內文＋襯線標題＋Mono 標籤），三份 CSS 合併內嵌，
+      // 否則匯出時標題與標籤會退回系統後備字型。
+      if (fontKey === "site") {
+        const parts = await Promise.all(
+          ["sans", "serif", "mono"].map((k) =>
+            buildGoogleFontsCssText(GOOGLE_FONTS_CSS_URLS[k])
+          )
+        );
+        return parts.join("\n");
+      }
       const cssUrl = GOOGLE_FONTS_CSS_URLS[fontKey];
       if (!cssUrl) throw new Error(`Unknown font key: ${fontKey}`);
       return buildGoogleFontsCssText(cssUrl);

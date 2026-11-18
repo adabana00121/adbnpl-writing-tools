@@ -29,12 +29,19 @@ const endsWithIncompleteTag = (str) => {
   return /<[^>]*$/.test(str);
 };
 
+// 輔助函式：判斷某一行是否為分隔線（通用淡線 <hr> 或網站風 /// 區塊）
+const isDividerLine = (s) => {
+  const t = (s || "").trim();
+  return t.startsWith("<hr") || t.startsWith('<div class="scene-divider"');
+};
+
 const useWatermarkCore = ({
   text,
   containerWidth,
   containerHeight,
   layoutConfig,
   fontConfig, // { fontFamily, fontSize, lineHeight, textAlign, keepSentences, autoIndent }
+  dividerStyle = "line", // "line"：通用淡線；"slashes"：網站風 /// 分隔線
 }) => {
   // 預設給一頁空的，避免畫面全白
   const [pages, setPages] = useState([""]);
@@ -52,15 +59,15 @@ const useWatermarkCore = ({
 
     const timer = setTimeout(() => {
       try {
-        const { headerRatio, footerRatio, bodyRatio, paddingV, paddingH } =
+        const { headerRatio, footerRatio, bodyRatio, paddingV, paddingH, paddingBottom = 0 } =
           layoutConfig;
         const { fontFamily, fontSize, lineHeight, textAlign, keepSentences, autoIndent } =
           fontConfig;
 
-        // 計算內文可用高度
+        // 計算內文可用高度：渲染時 paddingTop 為 paddingV / 2，paddingBottom 預設 0
+        //（網站風主題帶 paddingBottom，與上留白對稱，測量須同步扣除）
         const bodyTotalHeight = Math.floor(containerHeight * bodyRatio);
-        // 渲染時只有 paddingTop (paddingV / 2)，沒有 paddingBottom，統一測量環境
-        const availableTextHeight = bodyTotalHeight - Math.floor(paddingV / 2);
+        const availableTextHeight = bodyTotalHeight - Math.floor(paddingV / 2) - paddingBottom;
         const availableTextWidth = containerWidth - paddingH;
 
         // 建立測量用隱形 div
@@ -90,11 +97,14 @@ const useWatermarkCore = ({
         const newPages = [];
         // 統一換行符號
         const normalizedText = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
-        // 將 --- 替換為低存在感的分隔線
-        // 因為 pre-wrap 會渲染 \n，我們讓 hr 垂直有 2.5rem 的留白 (讓空間多一點)，但前後不需要因為取代而產生額外的 \n
+        // 將 --- 替換為分隔線：通用主題是低存在感淡線，網站風主題是站上的 /// 分隔線
+        // 因為 pre-wrap 會渲染 \n，我們讓分隔線垂直有留白，但前後不需要因為取代而產生額外的 \n
         const hrStyle = 'width: 30%; border: none; border-top: 1px solid currentColor; opacity: 0.2; margin: 2.5rem auto;';
+        // 斜線用 flex + gap 排，置中不會被 letter-spacing 的尾端空白帶偏（見 AGENTS.md 斜線教訓）
+        const slashesHtml = '<div class="scene-divider" style="display:flex;justify-content:center;gap:1em;font-family:\'JetBrains Mono\',monospace;font-size:13px;font-weight:700;color:rgba(10,10,10,0.5);margin:36px 0;"><span>/</span><span>/</span><span>/</span></div>';
+        const dividerHtml = dividerStyle === "slashes" ? slashesHtml : `<hr style="${hrStyle}" />`;
         // 修正正規表達式：只取代單獨一行的 ---，不再將它包圍的額外換行清除
-        const processedText = normalizedText.replace(/^---$/gm, `<hr style="${hrStyle}" />`);
+        const processedText = normalizedText.replace(/^---$/gm, dividerHtml);
         const paragraphs = processedText.split("\n");
         let currentPageContent = "";
 
@@ -102,7 +112,7 @@ const useWatermarkCore = ({
         for (let i = 0; i < paragraphs.length; i++) {
           let p = paragraphs[i];
           // 自動縮排邏輯：如果是開啟狀態且段落非空，且不是分隔線標籤，就無條件補上
-          if (autoIndent && p.trim().length > 0 && !p.startsWith('<hr')) {
+          if (autoIndent && p.trim().length > 0 && !isDividerLine(p)) {
             p = "\u3000" + p;
           }
 
@@ -113,9 +123,9 @@ const useWatermarkCore = ({
           let pWithNewline = p;
           if (i < paragraphs.length - 1) {
             // 只處理「我們用 --- 自動轉成 <hr>，但不想因為 \n 多空行」的情境。
-            const isCurrentHr = p?.trim()?.startsWith('<hr');
+            const isCurrentHr = isDividerLine(p);
             const nextP = paragraphs[i + 1];
-            const isNextHr = nextP?.trim()?.startsWith('<hr');
+            const isNextHr = isDividerLine(nextP);
             // 如果當前段落完全空白，代表使用者多按了 Enter，我們就尊重這個空行。
             const isEmptyLine = p.trim().length === 0;
             
@@ -257,6 +267,7 @@ const useWatermarkCore = ({
     containerWidth,
     containerHeight,
     layoutConfig,
+    dividerStyle,
     // 使用 JSON.stringify 避免 fontConfig 物件參照改變導致無限重渲染
     JSON.stringify(fontConfig),
   ]);

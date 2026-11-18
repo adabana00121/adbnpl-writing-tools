@@ -50,12 +50,15 @@ export const THEMES = {
     sub: "text-gray-400",
     border: "border-gray-700",
   },
-  // paper：網站風格（paper #F5F4EE＋ink #0A0A0A＋墨色框線），取代與 dark 太像的 midnight
-  paper: {
+  // site：網站風特別版（paper #F5F4EE＋ink #0A0A0A），v16 取代 paper。
+  // variant: "site" 時 WatermarkCard 走專屬版式（刊頭列、雙線、落款頁尾、4px 外框），
+  // 字體／字級／行距鎖定（黑體內文、21px、行距 1.6），--- 渲染成 /// 分隔線。
+  site: {
     bg: "bg-[#F5F4EE]",
     text: "text-[#0A0A0A]",
     sub: "text-gray-500",
     border: "border-[#0A0A0A]",
+    variant: "site",
   },
 };
 
@@ -63,7 +66,7 @@ export const QR_COLORS = {
   light: "#111827",
   sepia: "#5b4636",
   dark: "#f3f4f6",
-  paper: "#0A0A0A",
+  site: "#0A0A0A",
 };
 
 export const FONT_STYLES = {

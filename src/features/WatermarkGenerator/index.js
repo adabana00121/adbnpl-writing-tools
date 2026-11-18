@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import {
   Type,
   Palette,
@@ -65,8 +65,8 @@ import WatermarkPanel from "./components/WatermarkPanel";
 // 雖然不再手動注入給下載器，但預覽時仍需此樣式
 const GlobalStyles = () => (
   <style>{`
-    /* Google Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;700&display=swap');
+    /* Google Fonts（JetBrains Mono 是網站風主題的標籤字） */
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
     /* 自定義 Web Font: 丸子工坊 (繁體圓體) */
     @font-face {
@@ -136,19 +136,35 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
   }, [aspectRatio]);
 
   // 3. 核心排版邏輯
+  // 網站風主題鎖定：黑體內文、21px、行距 1.6、上下留白對稱、--- 渲染成 ///。
+  // 鎖定只在取用時生效，狀態值本身不改，切回其他主題時原設定還在。
+  const isSiteTheme = theme === "site";
+  const effFontFamily = isSiteTheme ? "sans" : fontFamily;
+  const effFontSize = isSiteTheme ? 21 : fontSize;
+  const effLineHeight = isSiteTheme ? 1.6 : lineHeight;
+  const baseLayout = LAYOUT_CONFIG[aspectRatio];
+  // useMemo：layoutConfig 進 useWatermarkCore 的 deps，參照必須穩定，否則會無限重算
+  const layoutConfig = useMemo(
+    () =>
+      isSiteTheme
+        ? { ...baseLayout, paddingBottom: Math.floor(baseLayout.paddingV / 2) }
+        : baseLayout,
+    [baseLayout, isSiteTheme]
+  );
   const { pages, isCalculating } = useWatermarkCore({
     text,
     containerWidth: CONTAINER_WIDTH,
     containerHeight,
-    layoutConfig: LAYOUT_CONFIG[aspectRatio],
+    layoutConfig,
     fontConfig: {
-      fontFamily: FONT_STYLES[fontFamily].fontFamily,
-      fontSize,
-      lineHeight,
+      fontFamily: FONT_STYLES[effFontFamily].fontFamily,
+      fontSize: effFontSize,
+      lineHeight: effLineHeight,
       textAlign,
       keepSentences,
       autoIndent,
     },
+    dividerStyle: isSiteTheme ? "slashes" : "line",
   });
 
   useEffect(() => {
@@ -265,7 +281,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
       {
         pixelRatio: 2, quality: 0.95, // 優化：輕微降低品質換取更快速度
         backgroundColor: THEMES[theme].bg === "bg-white" ? "#ffffff" : null,
-        fontCssText: getFontCssText(fontFamily), // 預建字型 CSS（快取共用），失敗時 hook 會退回預設內嵌
+        fontCssText: getFontCssText(isSiteTheme ? "site" : fontFamily), // 網站風主題需同時內嵌三個字族
         // modern-screenshot 通常不需要 skipFonts
       },
       {
@@ -290,7 +306,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
       // 字型 CSS 只建一次（內部快取），全部頁面共用；建置失敗時退回套件預設內嵌流程
       let fontCssText = null;
       try {
-        fontCssText = await getFontCssText(fontFamily);
+        fontCssText = await getFontCssText(isSiteTheme ? "site" : fontFamily);
       } catch (e) {
         console.warn('Font cssText unavailable, falling back to default font embedding:', e);
       }
@@ -495,11 +511,11 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
             totalPages={pages.length}
             width={CONTAINER_WIDTH}
             height={containerHeight}
-            layoutConfig={LAYOUT_CONFIG[aspectRatio]}
+            layoutConfig={layoutConfig}
             theme={THEMES[theme]}
-            fontStyle={FONT_STYLES[fontFamily]}
-            fontSize={fontSize}
-            lineHeight={lineHeight}
+            fontStyle={FONT_STYLES[effFontFamily]}
+            fontSize={effFontSize}
+            lineHeight={effLineHeight}
             textAlign={textAlign}
             watermarkSettings={{
               type: watermarkType,
@@ -527,11 +543,11 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
             totalPages={pages.length}
             width={CONTAINER_WIDTH}
             height={containerHeight}
-            layoutConfig={LAYOUT_CONFIG[aspectRatio]}
+            layoutConfig={layoutConfig}
             theme={THEMES[theme]}
-            fontStyle={FONT_STYLES[fontFamily]}
-            fontSize={fontSize}
-            lineHeight={lineHeight}
+            fontStyle={FONT_STYLES[effFontFamily]}
+            fontSize={effFontSize}
+            lineHeight={effLineHeight}
             textAlign={textAlign}
             watermarkSettings={{
               type: watermarkType,
