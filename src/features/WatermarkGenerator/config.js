@@ -31,6 +31,18 @@ export const LAYOUT_CONFIG = {
   },
 };
 
+// 網站風主題專用比例覆寫（v19）：只動三個非 9:16 比例，9:16 不動，其他主題不動。
+// 刊頭往下一點：刊頭區加高（3:4/4:5 各＋8px，1:1 ＋18px），讓 strip 上方留白回到與 9:16 相近的水位。
+//   實測基準（v18）：strip 距卡片頂邊 9:16＝24.7px、3:4/4:5＝16.8px（餘裕只剩 0.8px）、1:1＝13.3px（被往上推 2.7px，
+//   刊頭內容 103px 塞不進 108px 減 12px 上 padding 後的 96px 內容區，flex justify-end 把 strip 往上推出去）。
+// 頁尾瘦身：頁尾只剩一根線＋一行落款，120/108px 大半是空的，縮到約 64–68px 還給內文（3:4 64px、4:5 67.5px、1:1 66px）。
+// bodyRatio 一律由 1 − headerRatio − footerRatio 算出，分頁（useWatermarkCore）與渲染（flex-1）才會一致。
+export const SITE_LAYOUT_OVERRIDES = {
+  "3/4": { headerRatio: 0.16, footerRatio: 0.08 },
+  "4/5": { headerRatio: 0.17, footerRatio: 0.09 },
+  "1/1": { headerRatio: 0.21, footerRatio: 0.11 },
+};
+
 export const THEMES = {
   light: {
     bg: "bg-white",

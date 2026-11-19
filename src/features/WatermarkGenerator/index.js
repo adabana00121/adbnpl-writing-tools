@@ -49,6 +49,7 @@ import useWatermarkCore from "../../hooks/useWatermarkCore";
 import {
   CONTAINER_WIDTH,
   LAYOUT_CONFIG,
+  SITE_LAYOUT_OVERRIDES,
   THEMES,
   QR_COLORS,
   FONT_STYLES,
@@ -144,13 +145,20 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
   const effLineHeight = isSiteTheme ? 1.6 : lineHeight;
   const baseLayout = LAYOUT_CONFIG[aspectRatio];
   // useMemo：layoutConfig 進 useWatermarkCore 的 deps，參照必須穩定，否則會無限重算
-  const layoutConfig = useMemo(
-    () =>
-      isSiteTheme
-        ? { ...baseLayout, paddingBottom: Math.floor(baseLayout.paddingV / 2) }
-        : baseLayout,
-    [baseLayout, isSiteTheme]
-  );
+  // 網站風 v19：非 9:16 比例套用 SITE_LAYOUT_OVERRIDES（刊頭加高、頁尾瘦身），bodyRatio 由兩者算出；
+  // 其他主題與 9:16 走 baseLayout 原樣。
+  const layoutConfig = useMemo(() => {
+    if (!isSiteTheme) return baseLayout;
+    const o = SITE_LAYOUT_OVERRIDES[aspectRatio];
+    if (!o) return { ...baseLayout, paddingBottom: Math.floor(baseLayout.paddingV / 2) };
+    return {
+      ...baseLayout,
+      headerRatio: o.headerRatio,
+      footerRatio: o.footerRatio,
+      bodyRatio: 1 - o.headerRatio - o.footerRatio,
+      paddingBottom: Math.floor(baseLayout.paddingV / 2),
+    };
+  }, [baseLayout, isSiteTheme, aspectRatio]);
   const { pages, isCalculating } = useWatermarkCore({
     text,
     containerWidth: CONTAINER_WIDTH,
