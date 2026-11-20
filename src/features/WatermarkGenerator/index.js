@@ -254,7 +254,7 @@ const WatermarkGenerator = ({ globalAuthor, onBack }) => {
       };
       reader.readAsText(file);
     } else if (fileName.endsWith(".docx")) {
-      if (!window.mammoth) {
+      if (!mammoth) {
         alert("Word 解析組件尚未載入，請稍後再試。");
         return;
       }
